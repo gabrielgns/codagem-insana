@@ -31,6 +31,6 @@ O jogador ganha acesso à power-ups quando alcança determinadas pontuações. P
 - ____ pontos - Bomba. Faz sumir todas as palavras da tela e pausa o aparecimento de palavras por 2 segundos (mas a velocidade se mantém). As pontuações das -palavras que sumiram não são registradas.
 - ____ pontos - Para bom entendedor… - Durante um período de tempo o jogador pode digitar só a primeira metade das palavras que já vai ser considerada como se a palavra toda tivesse sido digitada. Isso é interessante porque as IDEs geralmente trabalham assim para fazer o auto completar: esperam você digitar 3 letras antes de começar a sugerir coisas.
 
-###Curiosidades
+### Curiosidades
 Listar curiosidades todas as vezes que abrir o menu do jogo.
 
