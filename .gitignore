@@ -1,0 +1,7 @@
+# Arquivos gerados na compilação
+*.o
+*.hi
+main
+
+# IDEs
+.vscode
