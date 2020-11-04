@@ -44,15 +44,15 @@ hardRound arr = do
 createStage :: [String] -> [[String]]
 createStage [] = [["None"]]
 createStage arr = do
-	let mzr = []
-	let mzr1 = hardRound arr : mzr
-	let mzr2 = (hardRound arr): mzr1
-	let mzr3 = (hardRound arr): mzr2
-	let mzr4 = (hardRound arr): mzr3
-	let mzr5 = (mediumRound arr): mzr4
-	let mzr6 = (mediumRound arr): mzr5
-	let mzr7 = (mediumRound arr): mzr6
-	let mzr8 = (easyRound arr) : mzr7
-	let mzr9 = (easyRound arr): mzr8 
-	let mzr10 = (easyRound arr): mzr9
-	return mzr10 !! 0
+	let array = []
+	let array1 = hardRound arr : array
+	let array2 = (hardRound arr): array1
+	let array3 = (hardRound arr): array2
+	let array4 = (hardRound arr): array3
+	let array5 = (mediumRound arr): array4
+	let array6 = (mediumRound arr): array5
+	let array7 = (mediumRound arr): array6
+	let array8 = (easyRound arr) : array7
+	let array9 = (easyRound arr): array8 
+	let array10 = (easyRound arr): array9
+	return array10 !! 0
