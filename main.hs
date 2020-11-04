@@ -1,10 +1,48 @@
 import Cores
 import RandNumberFuncs
+import Telas
+import System.Process
+import System.IO
+
+cleanScreen = do
+    system "cls"
+    system "clear"
+
 
 main = do
-	putStrLn (colorir "Teste" fundoAzul)
-	putStrLn (colorir "Outra linha" verde)
-	print (colorir "nao funciona se usar print" vermelho)
+    hSetBuffering stdout NoBuffering
+    cleanScreen
+    {- Teste de Cores
+    putStrLn "Teste de Cores"
+    putStrLn (colorir "Teste" fundoAzul)
+    putStrLn (colorir "Outra linha" verde)
+    print (colorir "nao funciona se usar print" vermelho)
+    -}
+
+    putStrLn "Teste menu + tela round"
+    putStr menuPrincipal
+    input <- getLine
+    cleanScreen
+
+    if input == "1"
+        then do
+            putStr menuSelecaoFase
+            ipt <- getLine
+            if ipt == "1"
+                then do
+                    cleanScreen
+                    let telaPalavras = completarTelaRound (criarTelaRound ["palavra1", "palvra2", "asasdasdasdasd"]) ++ (barraStatus 10000)
+
+                    putStr (telaPalavras)
+
+                    teste <- getLine
+                    print teste
+
+                else putStrLn "testes3"
+        else do
+            print "teste"
+
+{-  Teste Números Aleatórios
 
 	--Numeros que definem o range
 	k <- getLine
@@ -12,7 +50,7 @@ main = do
 
 	let ki = (read k:: Integer)
 	let ni = (read n:: Integer)
-	
+
 	print "testando funcao que gera numeros aleatorios em um range especifico"
 	o <- randNumberR (ki,ni)
 	print o
@@ -34,3 +72,4 @@ main = do
 	print "testando funcao que gera n numeros aleatorios (int)"
 	testInt <- setOfIntegerRN 10
 	print (testInt)
+-}
