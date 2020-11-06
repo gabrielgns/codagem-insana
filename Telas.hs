@@ -2,14 +2,8 @@ module Telas
 -- Telas
 (   menuPrincipal
 ,   menuSelecaoFase
-,   barraStatus
 -- Funções
-,   completarLinha
-,   criarLinhaPalavra
-,   centralizar
-,   criarTelaRound
-,   contarLinhas
-,   completarTelaRound
+,   gerarTelaRound
 -- Constantes
 ,   nLinhas
 ,   nColunas
@@ -17,8 +11,8 @@ module Telas
 where
 import Cores
 import RandNumberFuncs
-import System.Random
-import System.IO.Unsafe
+
+
 -- Tamanho do jogo 70 colunas x 20 linhas
 nColunas :: Int
 nColunas = 70
@@ -27,40 +21,29 @@ nLinhas :: Int
 nLinhas = 20
 
 {- Funções -}
+criarEspacos :: Int -> String
+criarEspacos quantidade = take quantidade (cycle " ")
+
+
 centralizar :: String -> String
 centralizar texto
-    | even (length texto) = take nEspacos (cycle " ") ++ texto ++ take nEspacos  (cycle " ")
-    | otherwise = take (nEspacos + 1) (cycle " ") ++ texto ++ take nEspacos (cycle " ")
+    | textoTemTamanhoPar = criarEspacos nEspacos ++ texto ++ criarEspacos nEspacos
+    | otherwise = criarEspacos (nEspacos + 1) ++ texto ++ criarEspacos nEspacos
     where
-        nEspacos = round(fromIntegral nColunas/2) - round(fromIntegral (length texto)/2)
+        textoTemTamanhoPar = even (length texto)
+        metadeTamanhoTexto = round(fromIntegral (length texto)/2)
+        nEspacos = round(fromIntegral nColunas/2) - metadeTamanhoTexto
 
--- | Completa texto com espaços até fechar uma linha
-completarLinha :: String -> String
-completarLinha texto = texto ++ take (length texto - nColunas) (cycle " ")
 
 criarLinhaPalavra :: Int -> String -> String
 criarLinhaPalavra nEspacos texto = take nEspacos (cycle " ") ++ texto ++ "\n"
 
-randomInt :: Int -> Int -> Int
-randomInt x y = unsafePerformIO (getStdRandom (randomR (x, y)))
-
--- Fazer funcao que chamar criar tela round e depois completa tela round, retornando a tela completa
-criarTelaRound :: [String] -> String
-criarTelaRound palavras
-    | palavras == [] = ""
-    | otherwise =
-        criarLinhaPalavra nEspacos palavra ++
-        take (randomInt 0 6) (cycle "\n") ++
-        criarTelaRound (tail palavras)
-    where
-        palavra = head palavras
-        maxEspacos = nColunas - length palavra
-        nEspacos = randomInt 0 maxEspacos -- Chamar funcao de gerar numero aleatório passando maxEspacos
 
 completarTelaRound :: String -> String
 completarTelaRound texto = texto ++ take (nLinhas - qLinhas - 2) (cycle "\n")
     where
         qLinhas = contarLinhas 0 texto
+
 
 contarLinhas :: Int -> String -> Int
 contarLinhas contador texto
@@ -68,8 +51,29 @@ contarLinhas contador texto
     | head texto == '\n' = contarLinhas (contador + 1) (tail texto)
     | otherwise = contarLinhas contador (tail texto)
 
-criarEspacos :: Int -> String
-criarEspacos quantidade = take quantidade (cycle " ")
+
+gerarTelaRound :: [String] -> Int -> String
+gerarTelaRound palavras pontuacao =
+    completarTelaRound (gerarAreaPalavras palavras) ++
+    gerarBarraStatus pontuacao
+
+
+gerarAreaPalavras :: [String] -> String
+gerarAreaPalavras palavras
+    | palavras == [] = ""
+    | otherwise =
+        criarLinhaPalavra nEspacos palavra ++
+        take (randomInt 0 6) (cycle "\n") ++
+        gerarAreaPalavras (tail palavras)
+    where
+        palavra = head palavras
+        maxEspacos = nColunas - length palavra
+        nEspacos = randomInt 0 maxEspacos
+
+
+gerarBarraStatus :: Int -> String
+gerarBarraStatus pontos =
+    (colorir ("Pontuação: " ++ show pontos ++ "\n") fundoAzul) ++ " > "
 
 
 {- Telas -}
@@ -77,7 +81,6 @@ menuPrincipal :: String
 menuPrincipal =
     take 7 (cycle "\n") ++
     colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
-    "\n" ++
     centralizar "[1] - Iniciar Jogo" ++
     centralizar "[2] - Ranking     " ++
     centralizar "[q] - Sair do Jogo" ++
@@ -92,8 +95,3 @@ menuSelecaoFase =
     centralizar "[2] - Haskell                 " ++
     centralizar "[q] - Voltar ao Menu Principal" ++
     take 9 (cycle "\n")
-
-
-barraStatus :: Int -> String
-barraStatus pontos =
-    (colorir ("Pontuação: " ++ show pontos ++ "\n") fundoAzul) ++ " > "

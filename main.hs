@@ -31,7 +31,7 @@ main = do
             if ipt == "1"
                 then do
                     cleanScreen
-                    let telaPalavras = completarTelaRound (criarTelaRound ["palavra1", "palvra2", "asasdasdasdasd"]) ++ (barraStatus 10000)
+                    let telaPalavras = gerarTelaRound ["palavra1", "palvra2", "asasdasdasdasd"] 10000
 
                     putStr (telaPalavras)
 
