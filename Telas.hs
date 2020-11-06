@@ -10,7 +10,7 @@ module Telas
 )
 where
 import Cores
-import RandNumberFuncs
+import RandFuncs
 
 
 -- Tamanho do jogo 70 colunas x 20 linhas
