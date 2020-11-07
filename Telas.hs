@@ -73,7 +73,7 @@ gerarAreaPalavras palavras
 
 gerarBarraStatus :: Int -> String
 gerarBarraStatus pontos =
-    (colorir ("Pontuação: " ++ show pontos ++ "\n") fundoAzul) ++ " > "
+    (colorir ("Pontuação: " ++ show pontos) fundoAzul)  ++ "\n" 
 
 
 {- Telas -}
