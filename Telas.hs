@@ -73,17 +73,17 @@ gerarAreaPalavras palavras
 
 gerarBarraStatus :: Int -> String
 gerarBarraStatus pontos =
-    (colorir ("Pontuação: " ++ show pontos) fundoAzul)  ++ "\n" 
+    (colorir ("Pontuação: " ++ show pontos) fundoAzul)  ++ "\n"
 
 
 {- Telas -}
 menuPrincipal :: String
 menuPrincipal =
     take 7 (cycle "\n") ++
-    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
-    centralizar "[1] - Iniciar Jogo" ++
-    centralizar "[2] - Ranking     " ++
-    centralizar "[q] - Sair do Jogo" ++
+    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++ "\n" ++
+    centralizar "[1] - Iniciar Jogo" ++ "\n" ++
+    centralizar "[2] - Ranking     " ++ "\n" ++
+    centralizar "[q] - Sair do Jogo" ++ "\n" ++
     take 9 (cycle "\n")
 
 menuSelecaoFase :: String
@@ -91,7 +91,7 @@ menuSelecaoFase =
     take 7 (cycle "\n") ++
     colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
     "\n" ++
-    centralizar "[1] - Python                  " ++
-    centralizar "[2] - Haskell                 " ++
-    centralizar "[q] - Voltar ao Menu Principal" ++
+    centralizar "[1] - Python                  " ++ "\n" ++
+    centralizar "[2] - Haskell                 " ++ "\n" ++
+    centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
     take 9 (cycle "\n")

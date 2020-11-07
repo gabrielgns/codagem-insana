@@ -1,13 +1,14 @@
 import System.Process
 import System.IO
 import Control.Monad
+--import Data.String.Utils
+import Data.List
 
 import RandomFuncs
 import Telas
 import Pontuacao
 import Cores
 --import Menus
-
 
 main :: IO ()
 main = do
@@ -26,6 +27,7 @@ main = do
             if fase == 'q'
                 then main
                 else do
+                    hSetBuffering stdin LineBuffering
                     {-
                     1. Ler palavras da linguagem
                     let palavrasLinguagem = carregarPalavrasLinguagem (linguagens !! (read fase))
@@ -64,16 +66,30 @@ executarPartida palavras pontuacao = do
             2. Pedir (ou não) o nome do jogador e salvar a pontuacao
             -}
         else do
-            let tela = gerarTelaRound palavras_atuais pontuacao
-            inputs <- forM palavras_atuais (\a -> do
+            let tela = gerarTelaRound palavrasRound pontuacao
+            inputs <- forM palavrasRound (\a -> do
                 limparTela
                 putStr tela
                 palavra <- getLine
                 return palavra)
-            let pontuacao_atual = calculaPontos tempo dificuldade palavras_corretas
+            let pontuacao_atual = calculaPontos tempo dificuldade palavrasCorretas
             executarPartida (tail palavras) (pontuacao + round(pontuacao_atual))
     where
-        palavras_atuais = head palavras
-        dificuldade = length palavras_atuais
+        palavraBonus = palavrasBonus !! (randomInt 0 9)
+        palavrasRound = case palavraBonus of "" -> head palavras
+                                             _  -> head palavras ++ [palavraBonus]
+
+
+        dificuldade = length (head palavras)
         tempo = 1 -- trocar pela funcao que calcula o tempo
-        palavras_corretas = dificuldade  --trocar esse último pelo resultado da funcao que verifica os as palavras digitadas corretamente
+        palavrasCorretas = dificuldade  --trocar esse último pelo resultado da funcao que verifica os as palavras digitadas corretamente
+
+palavrasBonus = take 10 (cycle (["", colorir "Bonus" amarelo, ""]))
+
+{-
+sortearPalavraBonus = do
+    case (toInteger(randomInt 0 10) `mod` 2) of
+        1 -> colorir "bonus" amarelo
+        0 -> colorir "bonus2" amarelo
+        _ -> ""
+-}
