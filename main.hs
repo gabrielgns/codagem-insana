@@ -1,5 +1,5 @@
 import Cores
-
+import Pontuacao
 import RandomFuncs
 import Telas
 import System.Process
