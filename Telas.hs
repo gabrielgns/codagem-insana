@@ -4,6 +4,7 @@ module Telas
 ,   menuSelecaoFase
 -- Funções
 ,   gerarTelaRound
+,   substituir
 -- Constantes
 ,   nLinhas
 ,   nColunas
@@ -19,6 +20,62 @@ nColunas = 70
 
 nLinhas :: Int
 nLinhas = 20
+
+
+{- Telas -}
+menuPrincipal :: String
+menuPrincipal =
+    take 7 (cycle "\n") ++
+    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++ "\n" ++
+    centralizar "[1] - Iniciar Jogo" ++ "\n" ++
+    centralizar "[2] - Ranking     " ++ "\n" ++
+    centralizar "[q] - Sair do Jogo" ++ "\n" ++
+    take 9 (cycle "\n")
+
+menuSelecaoFase :: String
+menuSelecaoFase =
+    take 7 (cycle "\n") ++
+    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
+    "\n" ++
+    centralizar "[1] - Python                  " ++ "\n" ++
+    centralizar "[2] - Haskell                 " ++ "\n" ++
+    centralizar "[3] - Java                    " ++ "\n" ++
+    centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
+    take 9 (cycle "\n")
+
+menuRanking :: String
+menuRanking =
+    take 7 (cycle "\n") ++
+    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
+    "\n" ++
+    centralizar "[1] - Python                  " ++ "\n" ++
+    centralizar "[2] - Haskell                 " ++ "\n" ++
+    centralizar "[3] - Java                    " ++ "\n" ++
+    centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
+    take 9 (cycle "\n")
+
+
+telaFracasso :: String
+telaFracasso =
+    take 7 (cycle "\n") ++
+    centralizar "Você ainda não é INSANO o suficiente" ++ "\n" ++
+    take 9 (cycle "\n")
+
+
+telaEntrarRanking :: String
+telaEntrarRanking =
+    take 7 (cycle "\n") ++
+    centralizar "Parabéns seu nome será lembrado por todos" ++ "\n" ++
+    take 9 (cycle "\n")
+
+telaFinal :: String
+telaFinal =
+    take 7 (cycle "\n") ++
+    centralizar "[1] - Jogar novamente         " ++ "\n" ++
+    centralizar "[2] - Voltar ao menu principal" ++ "\n" ++
+    centralizar "[q] - Sair do jogo            " ++ "\n" ++
+    take 9 (cycle "\n")
+
 
 {- Funções -}
 criarEspacos :: Int -> String
@@ -76,56 +133,35 @@ gerarBarraStatus pontos =
     (colorir ("Pontuação: " ++ show pontos) fundoAzul)  ++ "\n"
 
 
-{- Telas -}
-menuPrincipal :: String
-menuPrincipal =
-    take 7 (cycle "\n") ++
-    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++ "\n" ++
-    centralizar "[1] - Iniciar Jogo" ++ "\n" ++
-    centralizar "[2] - Ranking     " ++ "\n" ++
-    centralizar "[q] - Sair do Jogo" ++ "\n" ++
-    take 9 (cycle "\n")
-
-menuSelecaoFase :: String
-menuSelecaoFase =
-    take 7 (cycle "\n") ++
-    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
-    "\n" ++
-    centralizar "[1] - Python                  " ++ "\n" ++
-    centralizar "[2] - Haskell                 " ++ "\n" ++
-    centralizar "[3] - Java                    " ++ "\n" ++
-    centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
-    take 9 (cycle "\n")
-
-menuRanking :: String
-menuRanking =
-    take 7 (cycle "\n") ++
-    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
-    "\n" ++
-    centralizar "[1] - Python                  " ++ "\n" ++
-    centralizar "[2] - Haskell                 " ++ "\n" ++
-    centralizar "[3] - Java                    " ++ "\n" ++
-    centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
-    take 9 (cycle "\n")
+substituir :: String -> String -> String -> [String]
+substituir nvPlvr plvr txt = do
+    let inicioPalavra = buscarPalavra plvr txt 0
+        txtAntesPalavra = take inicioPalavra txt
+        txtAposPalavra = drop (inicioPalavra + length plvr) txt
+        nvTxt = txtAntesPalavra ++ nvPlvr ++ txtAposPalavra
+    return nvTxt
 
 
-telaFracasso :: String
-telaFracasso =
-    take 7 (cycle "\n") ++
-    centralizar "Você ainda não é INSANO o suficiente" ++ "\n" ++
-    take 9 (cycle "\n")
+-- Funções Auxiliares para a função substituir
+buscarPalavra :: String -> String -> Int -> Int
+buscarPalavra plvr txt posicao
+  |  length txt < length plvr = -1
+  |  ehPalavraProcurada plvr palavraEncontrada = posicao + inicioIndice
+  |  otherwise = buscarPalavra plvr (drop (inicioIndice+1) txt) (inicioIndice+1)
+  where
+    inicioIndice = buscarInicioPalavra plvr txt 0
+    palavraEncontrada = take (length plvr) (drop inicioIndice txt)
 
 
-telaEntrarRanking :: String
-telaEntrarRanking =
-    take 7 (cycle "\n") ++
-    centralizar "Parabéns seu nome será lembrado por todos" ++ "\n" ++
-    take 9 (cycle "\n")
+buscarInicioPalavra :: String -> String -> Int -> Int
+buscarInicioPalavra plvr txt posicao
+  | head txt == inicioPalavra = posicao
+  | null txt = -1
+  | otherwise = buscarInicioPalavra plvr (tail txt) (posicao+1)
+    where inicioPalavra = head plvr
 
-telaFinal :: String
-telaFinal =
-    take 7 (cycle "\n") ++
-    centralizar "[1] - Jogar novamente         " ++ "\n" ++
-    centralizar "[2] - Voltar ao menu principal" ++ "\n" ++
-    centralizar "[q] - Sair do jogo            " ++ "\n" ++
-    take 9 (cycle "\n")
+
+ehPalavraProcurada :: String -> String -> Bool
+ehPalavraProcurada plvr txt = plvr == busca
+    where
+        busca = take (length plvr) txt
