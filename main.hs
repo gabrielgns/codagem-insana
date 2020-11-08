@@ -104,13 +104,13 @@ main = do
                             cleanScreen
                             --
                             conteudo <- readFile "Linguagens/linguagemHaskell.txt"
-                            let listaPython = splitIt conteudo
-                            let fasePython = createStage listaPython
-                            print fasePython
+                            let listaHaskell = splitIt conteudo
+                            let faseHaskell = createStage listaHaskell
+                            print faseHaskell
                             callCommand "clear"
-                            let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
-                            let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
-                            let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
+                            let roundFacil = (faseHaskell !! 0 ++ faseHaskell !! 1++ faseHaskell !! 2)
+                            let roundMedio = (faseHaskell !! 3 ++ faseHaskell !! 4 ++ faseHaskell !! 5)
+                            let roundDificil = (faseHaskell !! 6 ++ faseHaskell !! 7 ++ faseHaskell !! 8 ++ faseHaskell !! 9)
                             --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
                             let telaPalavras = gerarTelaRound roundFacil 10000
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
@@ -166,13 +166,13 @@ main = do
                             cleanScreen
                             --
                             conteudo <- readFile "Linguagens/linguagemJava.txt"
-                            let listaPython = splitIt conteudo
-                            let fasePython = createStage listaPython
-                            print fasePython
+                            let listaJava = splitIt conteudo
+                            let faseJava = createStage listaJava
+                            print faseJava
                             callCommand "clear"
-                            let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
-                            let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
-                            let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
+                            let roundFacil = (faseJava !! 0 ++ faseJava !! 1++faseJava !! 2)
+                            let roundMedio = (faseJava !! 3 ++ faseJava !! 4 ++ faseJava !! 5)
+                            let roundDificil = (faseJava !! 6 ++ faseJava !! 7 ++ faseJava !! 8 ++ faseJava !! 9)
                             --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
                             let telaPalavras = gerarTelaRound roundFacil 10000
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
