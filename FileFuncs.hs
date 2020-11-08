@@ -29,7 +29,7 @@ somaEspaco frase = frase ++ " "
 
 mostraRanking :: IO ()
 mostraRanking = do
-       conteudo <- readFile "rankingNumeros.txt"
+       conteudo <- readFile "Linguagens/rankingNumeros.txt"
        putStrLn conteudo
 
 --escreveNoRanking :: String -> String
