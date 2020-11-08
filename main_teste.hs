@@ -10,6 +10,18 @@ import Pontuacao
 import Cores
 --import Menus
 
+verificaPalavras :: [String] -> String -> Bool
+verificaPalavras [] digitada = True
+verificaPalavras (h:t) digitada = 
+    if palavraCorreta h digitada then True
+    else verificaPalavras t digitada
+
+palavraCorreta :: String -> String -> Bool
+palavraCorreta palavraJogo palavraUser 
+    | palavraJogo == palavraUser = True
+    | otherwise = False
+
+
 main :: IO ()
 main = do
     -- Mostrar Menu Principal
