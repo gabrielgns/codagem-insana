@@ -95,3 +95,25 @@ menuSelecaoFase =
     centralizar "[2] - Haskell                 " ++ "\n" ++
     centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
     take 9 (cycle "\n")
+
+
+telaFracasso :: String
+telaFracasso =
+    take 7 (cycle "\n") ++
+    centralizar "Você ainda não é INSANO o suficiente" ++ "\n" ++
+    take 9 (cycle "\n")
+
+
+telaEntrarRanking :: String
+telaEntrarRanking =
+    take 7 (cycle "\n") ++
+    centralizar "Parabéns seu nome será lembrado por todos" ++ "\n" ++
+    take 9 (cycle "\n")
+
+telaFinal :: String
+telaFinal =
+    take 7 (cycle "\n") ++
+    centralizar "[1] - Jogar novamente         " ++ "\n" ++
+    centralizar "[2] - Voltar ao menu principal" ++ "\n" ++
+    centralizar "[q] - Sair do jogo            " ++ "\n" ++
+    take 9 (cycle "\n")

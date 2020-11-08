@@ -11,10 +11,10 @@ import Cores
 --import Menus
 
 verificaPalavras :: [String] -> String -> Bool
-verificaPalavras [] digitada = True
-verificaPalavras (h:t) digitada = 
-    if palavraCorreta h digitada then True
-    else verificaPalavras t digitada
+verificaPalavras [] palavraDigitada = True
+verificaPalavras (h:t) palavraDigitada = 
+    if palavraCorreta h palavraDigitada then True
+    else verificaPalavras t palavraDigitada
 
 palavraCorreta :: String -> String -> Bool
 palavraCorreta palavraJogo palavraUser 
