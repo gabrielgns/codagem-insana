@@ -97,6 +97,17 @@ menuSelecaoFase =
     centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
     take 9 (cycle "\n")
 
+menuRanking :: String
+menuRanking =
+    take 7 (cycle "\n") ++
+    colorir (centralizar "  CODAGEM INSANA  ") fundoAzul ++
+    "\n" ++
+    centralizar "[1] - Python                  " ++ "\n" ++
+    centralizar "[2] - Haskell                 " ++ "\n" ++
+    centralizar "[3] - Java                    " ++ "\n" ++
+    centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
+    take 9 (cycle "\n")
+
 
 telaFracasso :: String
 telaFracasso =

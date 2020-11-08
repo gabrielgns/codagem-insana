@@ -17,8 +17,8 @@ excluiMenor (x:xs) = xs
 somaEspaco :: String -> String
 somaEspaco frase = frase ++ " "
 
-mostraHanking :: IO ()
-mostraHanking = do
+mostraRanking :: IO ()
+mostraRanking = do
        conteudo <- readFile "rankingNumeros.txt"
        putStrLn conteudo
 
@@ -41,7 +41,7 @@ main = do
        conteudo <- readFile "Linguagens/linguagemCpp.txt"
        let listaCpp = splitIt conteudo
 
-       -- Hanking
+       -- Ranking
        conteudo <- readFile "numeros.txt"
 
        let l = splitIt conteudo
@@ -59,14 +59,14 @@ main = do
        print listaNomes
        callCommand "clear"
 
-       let hankingDesordenado = zip novaListaInteiros novaListaNomes
+       let rankingDesordenado = zip novaListaInteiros novaListaNomes
 
-       let hankingOrdenado = ordena hankingDesordenado
-       let hankingAtualizado = excluiMenor hankingOrdenado
+       let rankingOrdenado = ordena rankingDesordenado
+       let rankingAtualizado = excluiMenor rankingOrdenado
 
-       let tuplaUm = hankingAtualizado !!0
-       let tuplaDois = hankingAtualizado !!1
-       let tuplaTres = hankingAtualizado !!2
+       let tuplaUm = rankingAtualizado !!0
+       let tuplaDois = rankingAtualizado !!1
+       let tuplaTres = rankingAtualizado !!2
 
        let nomeTres = snd tuplaTres
        let nomeDois = snd tuplaDois

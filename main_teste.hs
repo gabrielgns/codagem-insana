@@ -3,7 +3,7 @@ import System.IO
 import Control.Monad
 --import Data.String.Utils
 import Data.List
-
+import FileFuncs
 import RandomFuncs
 import Telas
 import Pontuacao
@@ -20,7 +20,6 @@ palavraCorreta :: String -> String -> Bool
 palavraCorreta palavraJogo palavraUser 
     | palavraJogo == palavraUser = True
     | otherwise = False
-
 
 main :: IO ()
 main = do
@@ -49,13 +48,14 @@ main = do
                     -}
 
                     let palavrasPartida = [["pal1"], ["pal2", "pal3"], ["pal4", "pal5", "pal6"]]
-
                     executarPartida palavrasPartida 0
                     main
 
         '2' -> do -- Ranking
             limparTela
-            putStrLn "Ranking aqui"
+            mostraRanking
+            sair <- getChar
+            main
 
         _ -> do -- Fechar o jogo
             system "clear"

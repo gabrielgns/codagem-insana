@@ -18,9 +18,7 @@ As palavras de um tema são lidas de um arquivo e são escolhidas de forma aleat
 Conforme o jogador vai progredindo, mais palavras aparecem na tela de uma vez só. Mas para efeitos de pontuação, elas contam como apenas 1. Isso é feito com o objetivo de apressar o jogador para digitar mais rápido. Para compensar esse aumento na dificuldade, o fator base da pontuação é aumentado um pouco.
 
 ### Pontuação
-Ele tem todo o tempo que quiser para digitar, mas a pontuação é calculada com base no tempo que ele demorou. Então se ele demorar demais, mesmo que acerte a palavra, ele não ganha a pontuação.
-A cada x segundos, o fator que multiplica a pontuação diminui.
-Se o jogador errar a palavra, ele perde uma vida.
+Ele tem todo o tempo que quiser para digitar, mas a pontuação é calculada com base no tempo que ele demorou. Então se ele demorar demais, mesmo que acerte a palavra, ele não ganha a pontuação. A cada x segundos, o fator que multiplica a pontuação diminui. Se o jogador errar a palavra, ele perde uma vida.
 
 ### Registro de Recordes 
 Ao final da partida, se a pontuação obtida foi boa o suficiente para estar entre as três melhores, o jogador é convidado a colocar o seu nome para registrar nome e pontuação no ranking.
@@ -31,3 +29,14 @@ Palavras bônus/ônus usam coloração dourada.
 
 ### Ônus e Bônus
 Entre as palavras pode vir uma palavra dourada que tem a chance de ⅘ de vir um multiplicador de pontos e ⅕ de vir um ônus que pula ele de nível sem contar o aumento de pontos.
+
+## Como Jogar
+Você deve ter o ghc instalado na sua máquina. Abra o terminal e clone o repositório com
+```git clone https://github.com/gabrielgns/codagem-insana.git```
+Entre na pasta
+```cd codagem-insana```
+Compile o main
+```ghc main.hs```
+Rode o código
+```./main```
+Agora é só navegar pelo menu, aproveitar o jogo e olhar suas melhores pontuações
