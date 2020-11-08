@@ -105,16 +105,29 @@ executarPartida palavras pontuacao = do
 
             finalRound <- getCurrentTime
             let tempo = realToFrac (toRational(diffUTCTime finalRound inicioRound))
+            
+            -- Verificação se há palavra Bônus
+            if "Bonus"`elem`inputs && palavraBonus /= ""
+                then do
+                    -- 80 % de chance de Bônus
+                    if (randomInt 0 9) > 1
+                        then do
+                            print "Bônus"
+                            --Executar funcão Bônus
+                    else do
+                        print "ônus"
+                        --Executar funcão ônus
+            else do
 
-            -- Validação das palavras digitadas
-            let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
-                pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
-            limparTela
-            putStr $ colorirPalavrasRound palavrasCorretas tela
-            threadDelay 1000000 -- Dar tempo do player ver as palavras em verde
+                -- Validação das palavras digitadas
+                let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
+                    pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
+                limparTela
+                putStr $ colorirPalavrasRound palavrasCorretas tela
+                threadDelay 1000000 -- Dar tempo do player ver as palavras em verde
 
-            -- Chamar próximo round
-            executarPartida (tail palavras) (pontuacao + round pontuacaoAtual)
+                -- Chamar próximo round
+                executarPartida (tail palavras) (pontuacao + round pontuacaoAtual)
     where
         palavraBonus = palavrasBonus !! randomInt 0 9
         palavrasRound = case palavraBonus of "" -> head palavras
