@@ -1,6 +1,8 @@
 import System.Process
 import System.IO
 import Control.Monad
+import Control.Concurrent 
+import Data.Time
 --import Data.String.Utils
 import Data.List
 import FileFuncs
@@ -93,25 +95,30 @@ executarPartida palavras pontuacao = do
             -}
         else do
             let tela = gerarTelaRound palavrasRound pontuacao
+            -- Execução do Round
+            inicioRound <- getCurrentTime
+
             inputs <- forM palavrasRound (\a -> do
                 limparTela
                 putStr tela
                 getLine)
+
+            finalRound <- getCurrentTime
+            let tempo = realToFrac (toRational(diffUTCTime finalRound inicioRound))
+
+            -- Validação das palavras digitadas
             let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
                 pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
             limparTela
             putStr $ colorirPalavrasRound palavrasCorretas tela
-            getChar -- Dar enter para ir pro próximo round
+            threadDelay 1000000 -- Dar tempo do player ver as palavras em verde
+
             -- Chamar próximo round
             executarPartida (tail palavras) (pontuacao + round pontuacaoAtual)
     where
         palavraBonus = palavrasBonus !! randomInt 0 9
         palavrasRound = case palavraBonus of "" -> head palavras
                                              _  -> head palavras ++ [palavraBonus]
-
-
         dificuldade = length (head palavras)
-        tempo = 1 -- trocar pela funcao que calcula o tempo
-
 
 palavrasBonus = take 10 (cycle ["", colorir "Bonus" amarelo, ""])

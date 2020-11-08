@@ -3,10 +3,19 @@ module Pontuacao
 where
 
 calculaPontos :: Float -> Int -> Int -> Float
-calculaPontos tempo peso qtdPalavras = ((fromIntegral peso :: Float)  * (fromIntegral qtdPalavras :: Float))/ tempo
+calculaPontos tempo peso qtdPalavras = 
+    ((fromIntegral peso :: Float) * 
+    (fromIntegral qtdPalavras :: Float))
+    * calcularFatorPontuacao tempo
 
-{-
-teste da função
+calcularFatorPontuacao :: Float -> Float
+calcularFatorPontuacao tempo
+    | tempo <= 2.0 = 400.0
+    | tempo <= 4.0 = 250.0
+    | tempo <= 5.0 = 100.0
+    | otherwise = 0.0
+
+{-teste da função
 main = do
 	let tempo = 0.5
 	let tempo2 = 0.6
