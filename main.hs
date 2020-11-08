@@ -34,7 +34,7 @@ main = do
                 then do
                     cleanScreen
                     --
-                    conteudo <- readFile "linguagemPython.txt"
+                    conteudo <- readFile "Linguagens/linguagemPython.txt"
                     let listaPython = splitIt conteudo
                     let fasePython = createStage listaPython
 
@@ -114,7 +114,7 @@ main = do
                 then do
                     cleanScreen
                     --
-                    conteudo <- readFile "linguagemHaskell.txt"
+                    conteudo <- readFile "Linguagens/linguagemHaskell.txt"
                     let listaHaskell = splitIt conteudo
                     let faseHaskell = createStage listaHaskell
                     print faseHaskell
