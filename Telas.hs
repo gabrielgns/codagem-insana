@@ -104,7 +104,7 @@ completarTelaRound texto = texto ++ take (nLinhas - qLinhas - 2) (cycle "\n")
 
 contarLinhas :: Int -> String -> Int
 contarLinhas contador texto
-    | texto == [] = contador
+    | null texto = contador
     | head texto == '\n' = contarLinhas (contador + 1) (tail texto)
     | otherwise = contarLinhas contador (tail texto)
 
@@ -117,10 +117,10 @@ gerarTelaRound palavras pontuacao =
 
 gerarAreaPalavras :: [String] -> String
 gerarAreaPalavras palavras
-    | palavras == [] = ""
+    | null palavras = ""
     | otherwise =
         criarLinhaPalavra nEspacos palavra ++
-        take (randomInt 0 6) (cycle "\n") ++
+        take (randomInt 0 4) (cycle "\n") ++
         gerarAreaPalavras (tail palavras)
     where
         palavra = head palavras
@@ -130,11 +130,11 @@ gerarAreaPalavras palavras
 
 gerarBarraStatus :: Int -> String
 gerarBarraStatus pontos =
-    (colorir ("Pontuação: " ++ show pontos) fundoAzul)  ++ "\n"
+    colorir ("Pontuação: " ++ show pontos) fundoAzul  ++ "\n"
 
 
 substituir :: String -> String -> String -> [String]
-substituir nvPlvr plvr txt = do
+substituir plvr nvPlvr txt = do
     let inicioPalavra = buscarPalavra plvr txt 0
         txtAntesPalavra = take inicioPalavra txt
         txtAposPalavra = drop (inicioPalavra + length plvr) txt

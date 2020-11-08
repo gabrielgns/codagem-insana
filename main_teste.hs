@@ -10,16 +10,30 @@ import Pontuacao
 import Cores
 --import Menus
 
-verificaPalavras :: [String] -> String -> Bool
-verificaPalavras [] palavraDigitada = True
-verificaPalavras (h:t) palavraDigitada = 
-    if palavraCorreta h palavraDigitada then True
-    else verificaPalavras t palavraDigitada
+verificaPalavrasDigitadas :: [String] -> [String] -> [String]
+verificaPalavrasDigitadas plvrDig plvrCorr
+    | null plvrDig = [] 
+    | indPlvrCorr == -1 = verificaPalavrasDigitadas (tail plvrDig) plvrCorr
+    | indPlvrCorr /= -1 = [plvrCorr !! indPlvrCorr] ++ verificaPalavrasDigitadas (tail plvrDig) nvLista
 
-palavraCorreta :: String -> String -> Bool
-palavraCorreta palavraJogo palavraUser 
-    | palavraJogo == palavraUser = True
-    | otherwise = False
+    where
+        indPlvrCorr = buscaIndice (head plvrDig) plvrCorr 0
+        nvLista = [p | p <- plvrCorr, p /= (plvrCorr !! indPlvrCorr)]
+
+
+
+buscaIndice :: String -> [String] -> Int -> Int
+buscaIndice plvr lista ind
+    | null lista = -1
+    | head lista == plvr = ind
+    | otherwise = buscaIndice plvr (tail lista) (ind + 1)
+
+colorirPalavrasRound :: [String] -> String -> String
+colorirPalavrasRound plvrCorr t
+    | null plvrCorr = t
+    | otherwise = colorirPalavrasRound (tail plvrCorr) (head $ substituir (head plvrCorr) (colorir (head plvrCorr) verde) t)
+
+
 
 main :: IO ()
 main = do
@@ -47,7 +61,7 @@ main = do
                     let palavrasPartida = chamar funcao de sortear as palavras
                     -}
 
-                    let palavrasPartida = [["pal1"], ["pal2", "pal3"], ["pal4", "pal5", "pal6"]]
+                    let palavrasPartida = [["pal1"], ["pal2", "pal3", "pal4"], ["pal5", "pal6", "pal7"]]
                     executarPartida palavrasPartida 0
                     main
 
@@ -68,7 +82,7 @@ limparTela = do
 
 executarPartida :: [[String]] -> Int -> IO ()
 executarPartida palavras pontuacao = do
-    if palavras == []
+    if null palavras -- Partida acabou
         then do
             limparTela
             putStrLn("Pontuação Final: " ++ show pontuacao)
@@ -82,26 +96,22 @@ executarPartida palavras pontuacao = do
             inputs <- forM palavrasRound (\a -> do
                 limparTela
                 putStr tela
-                palavra <- getLine
-                return palavra)
-            let pontuacao_atual = calculaPontos tempo dificuldade palavrasCorretas
-            executarPartida (tail palavras) (pontuacao + round(pontuacao_atual))
+                getLine)
+            let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
+                pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
+            limparTela
+            putStr $ colorirPalavrasRound palavrasCorretas tela
+            getChar -- Dar enter para ir pro próximo round
+            -- Chamar próximo round
+            executarPartida (tail palavras) (pontuacao + round pontuacaoAtual)
     where
-        palavraBonus = palavrasBonus !! (randomInt 0 9)
+        palavraBonus = palavrasBonus !! randomInt 0 9
         palavrasRound = case palavraBonus of "" -> head palavras
                                              _  -> head palavras ++ [palavraBonus]
 
 
         dificuldade = length (head palavras)
         tempo = 1 -- trocar pela funcao que calcula o tempo
-        palavrasCorretas = dificuldade  --trocar esse último pelo resultado da funcao que verifica os as palavras digitadas corretamente
 
-palavrasBonus = take 10 (cycle (["", colorir "Bonus" amarelo, ""]))
 
-{-
-sortearPalavraBonus = do
-    case (toInteger(randomInt 0 10) `mod` 2) of
-        1 -> colorir "bonus" amarelo
-        0 -> colorir "bonus2" amarelo
-        _ -> ""
--}
+palavrasBonus = take 10 (cycle ["", colorir "Bonus" amarelo, ""])
