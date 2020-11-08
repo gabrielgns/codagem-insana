@@ -62,7 +62,7 @@ main = do
                     2. Selecionar palavras aleatórias a serem usadas na partida
                     let palavrasPartida = chamar funcao de sortear as palavras
                     -}
-
+                    let linguagem = "Python"
                     let palavrasPartida = [["pal1"], ["pal2", "pal3", "pal4"], ["pal5", "pal6", "pal7"]]
                     executarPartida palavrasPartida 0
                     main
@@ -105,28 +105,28 @@ executarPartida palavras pontuacao = do
 
             finalRound <- getCurrentTime
             let tempo = realToFrac (toRational(diffUTCTime finalRound inicioRound))
-            
+
+            -- Validação das palavras digitadas
+            let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
+                pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
+            limparTela
+            putStr $ colorirPalavrasRound palavrasCorretas tela
+            threadDelay 1000000 -- Dar tempo do player ver as palavras em verde
+
             -- Verificação se há palavra Bônus
             if "Bonus"`elem`inputs && palavraBonus /= ""
                 then do
                     -- 80 % de chance de Bônus
-                    if (randomInt 0 9) > 1
-                        then do
-                            print "Bônus"
-                            --Executar funcão Bônus
-                    else do
-                        print "ônus"
-                        --Executar funcão ônus
+                    if randomInt 0 9 > 1 -- Executar funcão bônus
+                        then executarPartida (tail palavras) (pontuacao + round pontuacaoAtual + 100000)
+                    else do -- Executar funcão ônus
+                        let restoPartida = drop 3 palavras
+                        print ("Aqui ia executar a funcao de gerar mais rounds")
+                            -- roundsParaAdicionar = ?? Gerar os 3 rounds da mesma linguagem da partida
+                            -- Aqui continua a execucao com os rounds a mais
+                            -- executarPartida (palavras + roundsParaAdicionar) (pontuacao + round pontuacaoAtual)
             else do
-
-                -- Validação das palavras digitadas
-                let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
-                    pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
-                limparTela
-                putStr $ colorirPalavrasRound palavrasCorretas tela
-                threadDelay 1000000 -- Dar tempo do player ver as palavras em verde
-
-                -- Chamar próximo round
+                -- Chamar próximo round normalmente
                 executarPartida (tail palavras) (pontuacao + round pontuacaoAtual)
     where
         palavraBonus = palavrasBonus !! randomInt 0 9
