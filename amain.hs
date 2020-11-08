@@ -5,8 +5,8 @@ import Control.Concurrent
 import Data.Time
 --import Data.String.Utils
 import Data.List
-import FileFuncs
-import RandomFuncs
+import FuncoesArquivo
+import FuncoesRandomicas
 import Telas
 import Pontuacao
 import Cores
@@ -66,13 +66,13 @@ main = do
 
                     conteudo <- readFile arquivoLinguagem
                     
-                    let palavrasLinguagem = splitIt conteudo
+                    let palavrasLinguagem = separa conteudo
                         palavrasPartida = createStage palavrasLinguagem
                     print palavrasPartida
                     limparTela
 
                     -- Executar Partida
-                    executarPartida linguagem [(head palavrasPartida)] 0
+                    executarPartida linguagem palavrasPartida 0
                     main
                     
         '2' -> do -- Ranking
@@ -125,7 +125,7 @@ executarPartida linguagem palavras pontuacao = do
             -- Executar, ou não, as funções da palavra bonus
             if "Bonus"`elem`inputs && palavraBonus /= ""
                 then do
-                    if randomInt 0 9 > 10 -- Executar funcão bônus
+                    if inteiroAleatorio 0 9 > 1 -- Executar funcão bônus
                         then executarPartida linguagem (tail palavras) (pontuacao + round pontuacaoAtual + 100000)
 
                     else do -- Executar funcão ônus (pular 3 rounds)
@@ -135,10 +135,9 @@ executarPartida linguagem palavras pontuacao = do
                         limparTela
                         conteudo <- readFile arquivoLinguagem
                     
-                        let palavrasLinguagem = splitIt conteudo
-                            restoDaPartida = hardRoundGen palavrasLinguagem restoPartida
-                        print restoDaPartida
-                        getChar
+                        let palavrasLinguagem = separa conteudo
+                            restoDaPartida = roundDificilGen palavrasLinguagem restoPartida
+
                         -- Aqui continua a execucao com os rounds a mais
                         executarPartida linguagem restoDaPartida (pontuacao + round pontuacaoAtual)
 
@@ -146,7 +145,7 @@ executarPartida linguagem palavras pontuacao = do
                 -- Chamar próximo round normalmente
                 executarPartida linguagem (tail palavras) (pontuacao + round pontuacaoAtual)
     where
-        palavraBonus = palavrasBonus !! randomInt 0 9
+        palavraBonus = palavrasBonus !! inteiroAleatorio 0 9
         palavrasRound = case palavraBonus of "" -> head palavras
                                              _  -> head palavras ++ [palavraBonus]
         dificuldade = length (head palavras)
