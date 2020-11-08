@@ -93,6 +93,7 @@ menuSelecaoFase =
     "\n" ++
     centralizar "[1] - Python                  " ++ "\n" ++
     centralizar "[2] - Haskell                 " ++ "\n" ++
+    centralizar "[3] - Java                    " ++ "\n" ++
     centralizar "[q] - Voltar ao Menu Principal" ++ "\n" ++
     take 9 (cycle "\n")
 

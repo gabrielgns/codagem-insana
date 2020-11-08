@@ -49,7 +49,7 @@ main = do
                     --let telaPalavras1 = gerarTelaRound roundMedio 10000
                     --let telaPalavras2 = gerarTelaRound roundDificil 10000
 
-                    conteudo <- readFile "numeros.txt"
+                    conteudo <- readFile "Ranking/numeros.txt"
 
                     let l = splitIt conteudo
                     let inteiro = converteInteiro l
@@ -58,22 +58,22 @@ main = do
 
                     let novaListaInteiros = valorNovo : inteiro
 
-                    conteudo <- readFile "nomes.txt"
+                    conteudo <- readFile "Ranking/nomes.txt"
 
                     let listaNomes = splitIt conteudo
                     let novaListaNomes = novoNome : listaNomes 
 
                     print listaNomes
                     callCommand "clear"
+                    
+                    let rankingDesordenado = zip novaListaInteiros novaListaNomes
 
-                    let hankingDesordenado = zip novaListaInteiros novaListaNomes
+                    let rankingOrdenado = ordena rankingDesordenado
+                    let rankingAtualizado = excluiMenor rankingOrdenado
 
-                    let hankingOrdenado = ordena hankingDesordenado
-                    let hankingAtualizado = excluiMenor hankingOrdenado
-
-                    let tuplaUm = hankingAtualizado !!0
-                    let tuplaDois = hankingAtualizado !!1
-                    let tuplaTres = hankingAtualizado !!2
+                    let tuplaUm = rankingAtualizado !!0
+                    let tuplaDois = rankingAtualizado !!1
+                    let tuplaTres = rankingAtualizado !!2
 
                     let nomeTres = snd tuplaTres
                     let nomeDois = snd tuplaDois
@@ -89,21 +89,21 @@ main = do
                     let valorTresEspaco = somaEspaco (show valorTres)
                     let valorDoisEspaco = somaEspaco (show valorDois)
 
-                    writeFile "nomes.txt" nomeEspacoTres
-                    appendFile "nomes.txt" nomeEspacoDois
-                    appendFile "nomes.txt" nomeUm
+                    writeFile "Ranking/nomes.txt" nomeEspacoTres
+                    appendFile "Ranking/nomes.txt" nomeEspacoDois
+                    appendFile "Ranking/nomes.txt" nomeUm
 
-                    writeFile "numeros.txt" valorTresEspaco
-                    appendFile "numeros.txt" valorDoisEspaco
-                    appendFile "numeros.txt" (show valorUm)
-
-                    writeFile "rankingNumeros.txt" "Ranking: \n"
-                    appendFile "rankingNumeros.txt" ("1. " ++ nomeTres)
-                    appendFile "rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
-                    appendFile "rankingNumeros.txt" ("\n2. " ++ nomeDois)
-                    appendFile "rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
-                    appendFile "rankingNumeros.txt" ("\n3. " ++ nomeUm)
-                    appendFile "rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
+                    writeFile "Ranking/nomes.txt" valorTresEspaco
+                    appendFile "Ranking/nomes.txt" valorDoisEspaco
+                    appendFile "Ranking/nomes.txt" (show valorUm)
+                    --
+                    writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
+                    appendFile "Ranking/rankingNumeros.txt" ("1. " ++ nomeTres)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ nomeDois)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ nomeUm)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
 
                     putStr (telaPalavras)
 
@@ -115,43 +115,45 @@ main = do
                     cleanScreen
                     --
                     conteudo <- readFile "Linguagens/linguagemHaskell.txt"
-                    let listaHaskell = splitIt conteudo
-                    let faseHaskell = createStage listaHaskell
-                    print faseHaskell
+                    let listaPython = splitIt conteudo
+                    let fasePython = createStage listaPython
+
+                    print fasePython
                     callCommand "clear"
-                    let roundFacil = (faseHaskell !! 0 ++ faseHaskell !! 1++faseHaskell !! 2)
-                    let roundMedio = (faseHaskell !! 3 ++ faseHaskell !! 4 ++ faseHaskell !! 5)
-                    let roundDificil = (faseHaskell !! 6 ++ faseHaskell !! 7 ++ faseHaskell !! 8 ++ faseHaskell !! 9)
+
+                    let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
+                    let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
+                    let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
                     --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
                     let telaPalavras = gerarTelaRound roundFacil 10000
+                    --let telaPalavras1 = gerarTelaRound roundMedio 10000
+                    --let telaPalavras2 = gerarTelaRound roundDificil 10000
 
-                    putStr (telaPalavras)
-
-                    conteudo <- readFile "numeros.txt"
+                    conteudo <- readFile "Ranking/numeros.txt"
 
                     let l = splitIt conteudo
                     let inteiro = converteInteiro l
-                    let valorNovo = 20    --  pontuação alcançada
-                    let novoNome = "BYU"  --  nome da pessoa com a nova pontuação
+                    let valorNovo = 7  --  pontuação alcançada
+                    let novoNome = "DEU" --  nome da pessoa com a nova pontuação
 
                     let novaListaInteiros = valorNovo : inteiro
 
-                    conteudo <- readFile "nomes.txt"
+                    conteudo <- readFile "Ranking/nomes.txt"
 
                     let listaNomes = splitIt conteudo
                     let novaListaNomes = novoNome : listaNomes 
 
                     print listaNomes
                     callCommand "clear"
+                    
+                    let rankingDesordenado = zip novaListaInteiros novaListaNomes
 
-                    let hankingDesordenado = zip novaListaInteiros novaListaNomes
+                    let rankingOrdenado = ordena rankingDesordenado
+                    let rankingAtualizado = excluiMenor rankingOrdenado
 
-                    let hankingOrdenado = ordena hankingDesordenado
-                    let hankingAtualizado = excluiMenor hankingOrdenado
-
-                    let tuplaUm = hankingAtualizado !!0
-                    let tuplaDois = hankingAtualizado !!1
-                    let tuplaTres = hankingAtualizado !!2
+                    let tuplaUm = rankingAtualizado !!0
+                    let tuplaDois = rankingAtualizado !!1
+                    let tuplaTres = rankingAtualizado !!2
 
                     let nomeTres = snd tuplaTres
                     let nomeDois = snd tuplaDois
@@ -167,21 +169,103 @@ main = do
                     let valorTresEspaco = somaEspaco (show valorTres)
                     let valorDoisEspaco = somaEspaco (show valorDois)
 
-                    writeFile "nomes.txt" nomeEspacoTres
-                    appendFile "nomes.txt" nomeEspacoDois
-                    appendFile "nomes.txt" nomeUm
+                    writeFile "Ranking/nomes.txt" nomeEspacoTres
+                    appendFile "Ranking/nomes.txt" nomeEspacoDois
+                    appendFile "Ranking/nomes.txt" nomeUm
 
-                    writeFile "numeros.txt" valorTresEspaco
-                    appendFile "numeros.txt" valorDoisEspaco
-                    appendFile "numeros.txt" (show valorUm)
+                    writeFile "Ranking/nomes.txt" valorTresEspaco
+                    appendFile "Ranking/nomes.txt" valorDoisEspaco
+                    appendFile "Ranking/nomes.txt" (show valorUm)
+                    --
+                    writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
+                    appendFile "Ranking/rankingNumeros.txt" ("1. " ++ nomeTres)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ nomeDois)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ nomeUm)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
 
-                    writeFile "rankingNumeros.txt" "Ranking: \n"
-                    appendFile "rankingNumeros.txt" ("1. " ++ nomeTres)
-                    appendFile "rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
-                    appendFile "rankingNumeros.txt" ("\n2. " ++ nomeDois)
-                    appendFile "rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
-                    appendFile "rankingNumeros.txt" ("\n3. " ++ nomeUm)
-                    appendFile "rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
+                    putStr (telaPalavras)
+
+                    teste <- getLine
+                    print teste
+            
+            else if ipt == "3"
+                then do
+                    cleanScreen
+                    --
+                    conteudo <- readFile "Linguagens/linguagemJava.txt"
+                    let listaPython = splitIt conteudo
+                    let fasePython = createStage listaPython
+
+                    print fasePython
+                    callCommand "clear"
+
+                    let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
+                    let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
+                    let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
+                    --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
+                    let telaPalavras = gerarTelaRound roundFacil 10000
+                    --let telaPalavras1 = gerarTelaRound roundMedio 10000
+                    --let telaPalavras2 = gerarTelaRound roundDificil 10000
+
+                    conteudo <- readFile "Ranking/numeros.txt"
+
+                    let l = splitIt conteudo
+                    let inteiro = converteInteiro l
+                    let valorNovo = 7  --  pontuação alcançada
+                    let novoNome = "DEU" --  nome da pessoa com a nova pontuação
+
+                    let novaListaInteiros = valorNovo : inteiro
+
+                    conteudo <- readFile "Ranking/nomes.txt"
+
+                    let listaNomes = splitIt conteudo
+                    let novaListaNomes = novoNome : listaNomes 
+
+                    print listaNomes
+                    callCommand "clear"
+
+                    let rankingDesordenado = zip novaListaInteiros novaListaNomes
+
+                    let rankingOrdenado = ordena rankingDesordenado
+                    let rankingAtualizado = excluiMenor rankingOrdenado
+
+                    let tuplaUm = rankingAtualizado !!0
+                    let tuplaDois = rankingAtualizado !!1
+                    let tuplaTres = rankingAtualizado !!2
+
+                    let nomeTres = snd tuplaTres
+                    let nomeDois = snd tuplaDois
+                    let nomeUm = snd tuplaUm
+
+                    let valorTres = fst tuplaTres
+                    let valorDois = fst tuplaDois
+                    let valorUm = fst tuplaUm
+
+                    let nomeEspacoTres = somaEspaco nomeTres
+                    let nomeEspacoDois = somaEspaco nomeDois
+
+                    let valorTresEspaco = somaEspaco (show valorTres)
+                    let valorDoisEspaco = somaEspaco (show valorDois)
+
+                    writeFile "Ranking/nomes.txt" nomeEspacoTres
+                    appendFile "Ranking/nomes.txt" nomeEspacoDois
+                    appendFile "Ranking/nomes.txt" nomeUm
+
+                    writeFile "Ranking/nomes.txt" valorTresEspaco
+                    appendFile "Ranking/nomes.txt" valorDoisEspaco
+                    appendFile "Ranking/nomes.txt" (show valorUm)
+                    --
+                    writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
+                    appendFile "Ranking/rankingNumeros.txt" ("1. " ++ nomeTres)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ nomeDois)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ nomeUm)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
+
+                    putStr (telaPalavras)
 
                     teste <- getLine
                     print teste
@@ -190,7 +274,7 @@ main = do
 
     else if input == "2"
         then do
-            mostraHanking       
+            mostraRanking       
                 
             
     else do print "teste"

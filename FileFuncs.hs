@@ -5,7 +5,7 @@ converteInteiro,
 ordena,
 somaEspaco,
 excluiMenor,
-mostraHanking
+mostraRanking
 )
 where
 import System.IO
@@ -27,7 +27,13 @@ excluiMenor (x:xs) = xs
 somaEspaco :: String -> String
 somaEspaco frase = frase ++ " "
 
-mostraHanking :: IO ()
-mostraHanking = do
+mostraRanking :: IO ()
+mostraRanking = do
        conteudo <- readFile "rankingNumeros.txt"
        putStrLn conteudo
+
+--escreveNoRanking :: String -> String
+--somaEspaco frase = frase ++ " "
+
+
+
