@@ -1,0 +1,24 @@
+while
+for
+if
+else if
+return
+continue
+break
+struct
+void
+int
+long
+double
+bool
+size
+vector
+sort
+cin
+cout
+scanf
+printf
+typedef
+pair
+queue
+priority_queue
