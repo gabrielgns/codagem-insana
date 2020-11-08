@@ -1,6 +1,6 @@
-module FileFuncs
+module FuncoesArquivo
 (
-splitIt,
+separa,
 converteInteiro,
 ordena,
 somaEspaco,
@@ -12,16 +12,16 @@ import System.IO
 import Data.List
 import System.Process
 
-splitIt :: String -> [String]
-splitIt palavra = words palavra
+separa :: String -> [String]
+separa palavra = words palavra
 
-converteInteiro :: [String] -> [Int]
+converteInteiro :: [String] -> [Float]
 converteInteiro = map read
 
-ordena :: [(Int,[Char])] -> [(Int,[Char])]
+ordena :: [(Float,[Char])] -> [(Float,[Char])]
 ordena lista = sort lista
 
-excluiMenor :: [(Int,[Char])] -> [(Int,[Char])]
+excluiMenor :: [(Float,[Char])] -> [(Float,[Char])]
 excluiMenor (x:xs) = xs
 
 somaEspaco :: String -> String

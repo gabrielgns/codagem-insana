@@ -11,7 +11,7 @@ module Telas
 )
 where
 import Cores
-import RandomFuncs
+import FuncoesRandomicas
 
 
 -- Tamanho do jogo 70 colunas x 20 linhas
@@ -120,12 +120,12 @@ gerarAreaPalavras palavras
     | null palavras = ""
     | otherwise =
         criarLinhaPalavra nEspacos palavra ++
-        take (randomInt 0 4) (cycle "\n") ++
+        take (inteiroAleatorio 0 4) (cycle "\n") ++
         gerarAreaPalavras (tail palavras)
     where
         palavra = head palavras
         maxEspacos = nColunas - length palavra
-        nEspacos = randomInt 0 maxEspacos
+        nEspacos = inteiroAleatorio 0 maxEspacos
 
 
 gerarBarraStatus :: Int -> String

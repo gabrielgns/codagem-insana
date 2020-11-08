@@ -1,8 +1,8 @@
 import Cores
 import Pontuacao
-import RandomFuncs
+import FuncoesRandomicas
 import Telas
-import FileFuncs
+import FuncoesArquivo
 import System.Process
 import System.IO
 import Control.Concurrent
@@ -46,7 +46,7 @@ main = do
                             cleanScreen
                             
                             conteudo <- readFile "Linguagens/linguagemPython.txt"
-                            let listaPython = splitIt conteudo
+                            let listaPython = separa conteudo
                             let fasePython = createStage listaPython
                             print fasePython
                             callCommand "clear"
@@ -65,7 +65,7 @@ main = do
                             let roundDificil3 = fasePython !! 9
                             --Comandos abaixo cria o roud extra, caso o user seja sorteado com palavra BONUS 
                             {-
-                            let faseExtra = hardRoundGen listaPython fasePython
+                            let faseExtra = roundDificilGen listaPython fasePython
                             let roundDificilExtra = faseExtra !! 8
                             let roundDificilExtra = faseExtra !! 9
                             let roundDificilExtra = faseExtra !! 10
@@ -163,14 +163,14 @@ main = do
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
                             --let telaPalavras2 = gerarTelaRound roundDificil 10000
                             conteudo <- readFile "Ranking/numeros.txt"
-                            let listaDeNumeros = splitIt conteudo
+                            let listaDeNumeros = separa conteudo
                             let numero = converteInteiro listaDeNumeros
                             let valorNovo = 7  --  pontuação alcançada caso tenhamos um record
                             let novoNome = "DEU" --  nome da pessoa com a nova pontuação
                             let novaListaInteiros = valorNovo : numero
 
                             conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = splitIt conteudo
+                            let listaNomes = separa conteudo
                             let novaListaNomes = novoNome : listaNomes 
                             print listaNomes
                             callCommand "clear"
@@ -221,7 +221,7 @@ main = do
                             cleanScreen
                             
                             conteudo <- readFile "Linguagens/linguagemHaskell.txt"
-                            let listaHaskell = splitIt conteudo
+                            let listaHaskell = separa conteudo
                             let faseHaskell = createStage listaHaskell
                             print faseHaskell
                             callCommand "clear"
@@ -240,7 +240,7 @@ main = do
                             let roundDificil3 = faseHaskell !! 9
                             --Comandos abaixo cria o roud extra, caso o user seja sorteado com palavra BONUS 
                             {-
-                            let faseExtra = hardRoundGen listaHaskell faseHaskell
+                            let faseExtra = roundDificilGen listaHaskell faseHaskell
                             let roundDificilExtra = faseExtra !! 8
                             let roundDificilExtra = faseExtra !! 9
                             let roundDificilExtra = faseExtra !! 10
@@ -338,14 +338,14 @@ main = do
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
                             --let telaPalavras2 = gerarTelaRound roundDificil 10000
                             conteudo <- readFile "Ranking/numeros.txt"
-                            let listaDeNumeros = splitIt conteudo
+                            let listaDeNumeros = separa conteudo
                             let numero = converteInteiro listaDeNumeros
                             let valorNovo = 7  --  pontuação alcançada caso tenhamos um record
                             let novoNome = "DEU" --  nome da pessoa com a nova pontuação
                             let novaListaInteiros = valorNovo : numero
 
                             conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = splitIt conteudo
+                            let listaNomes = separa conteudo
                             let novaListaNomes = novoNome : listaNomes 
                             print listaNomes
                             callCommand "clear"
@@ -397,7 +397,7 @@ main = do
                             cleanScreen
                             
                             conteudo <- readFile "Linguagens/linguagemJava.txt"
-                            let listaJava = splitIt conteudo
+                            let listaJava = separa conteudo
                             let faseJava = createStage listaJava
                             print faseJava
                             callCommand "clear"
@@ -416,7 +416,7 @@ main = do
                             let roundDificil3 = faseJava !! 9
                             --Comandos abaixo cria o roud extra, caso o user seja sorteado com palavra BONUS 
                             {-
-                            let faseExtra = hardRoundGen listaJava faseJava
+                            let faseExtra = roundDificilGen listaJava faseJava
                             let roundDificilExtra = faseExtra !! 8
                             let roundDificilExtra = faseExtra !! 9
                             let roundDificilExtra = faseExtra !! 10
@@ -514,14 +514,14 @@ main = do
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
                             --let telaPalavras2 = gerarTelaRound roundDificil 10000
                             conteudo <- readFile "Ranking/numeros.txt"
-                            let listaDeNumeros = splitIt conteudo
+                            let listaDeNumeros = separa conteudo
                             let numero = converteInteiro listaDeNumeros
                             let valorNovo = 7  --  pontuação alcançada caso tenhamos um record
                             let novoNome = "DEU" --  nome da pessoa com a nova pontuação
                             let novaListaInteiros = valorNovo : numero
 
                             conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = splitIt conteudo
+                            let listaNomes = separa conteudo
                             let novaListaNomes = novoNome : listaNomes 
                             print listaNomes
                             callCommand "clear"

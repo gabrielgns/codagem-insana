@@ -1,12 +1,12 @@
 import Cores
 import Pontuacao
-import RandomFuncs
+import FuncoesRandomicas
 import Telas
-import FileFuncs
+import FuncoesArquivo
 import System.Process
 import System.IO
 
-cleanScreen = do
+limpaTela = do
     system "cls"
     system "clear"
 
@@ -21,14 +21,14 @@ main = do
     -}
   -- Mostrar Menu Principal
     hSetBuffering stdin NoBuffering
-    cleanScreen
+    limpaTela
     putStr menuPrincipal
     comando <- getChar
 
     case comando of
         '1' -> do -- Selecionar Fase
 
-            cleanScreen
+            limpaTela
             putStr menuSelecaoFase
             ipt <- getLine
 
@@ -39,10 +39,10 @@ main = do
 
                     if ipt == "1"
                         then do
-                            cleanScreen
+                            limpaTela
                             
                             conteudo <- readFile "Linguagens/linguagemPython.txt"
-                            let listaPython = splitIt conteudo
+                            let listaPython = separa conteudo
                             let fasePython = createStage listaPython
                             print fasePython
                             callCommand "clear"
@@ -54,13 +54,13 @@ main = do
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
                             --let telaPalavras2 = gerarTelaRound roundDificil 10000
                             conteudo <- readFile "Ranking/numeros.txt"
-                            let l = splitIt conteudo
+                            let l = separa conteudo
                             let inteiro = converteInteiro l
                             let valorNovo = 7  --  pontuação alcançada
                             let novoNome = "DEU" --  nome da pessoa com a nova pontuação
                             let novaListaInteiros = valorNovo : inteiro
                             conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = splitIt conteudo
+                            let listaNomes = separa conteudo
                             let novaListaNomes = novoNome : listaNomes 
                             print listaNomes
                             callCommand "clear"
@@ -101,10 +101,10 @@ main = do
 
                     else if ipt == "2"
                         then do
-                            cleanScreen
+                            limpaTela
                             --
                             conteudo <- readFile "Linguagens/linguagemHaskell.txt"
-                            let listaPython = splitIt conteudo
+                            let listaPython = separa conteudo
                             let fasePython = createStage listaPython
                             print fasePython
                             callCommand "clear"
@@ -116,13 +116,13 @@ main = do
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
                             --let telaPalavras2 = gerarTelaRound roundDificil 10000
                             conteudo <- readFile "Ranking/numeros.txt"
-                            let l = splitIt conteudo
+                            let l = separa conteudo
                             let inteiro = converteInteiro l
                             let valorNovo = 7  --  pontuação alcançada
                             let novoNome = "DEU" --  nome da pessoa com a nova pontuação
                             let novaListaInteiros = valorNovo : inteiro
                             conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = splitIt conteudo
+                            let listaNomes = separa conteudo
                             let novaListaNomes = novoNome : listaNomes 
                             print listaNomes
                             callCommand "clear"
@@ -163,10 +163,10 @@ main = do
                     
                     else if ipt == "3"
                         then do
-                            cleanScreen
+                            limpaTela
                             --
                             conteudo <- readFile "Linguagens/linguagemJava.txt"
-                            let listaPython = splitIt conteudo
+                            let listaPython = separa conteudo
                             let fasePython = createStage listaPython
                             print fasePython
                             callCommand "clear"
@@ -178,13 +178,13 @@ main = do
                             --let telaPalavras1 = gerarTelaRound roundMedio 10000
                             --let telaPalavras2 = gerarTelaRound roundDificil 10000
                             conteudo <- readFile "Ranking/numeros.txt"
-                            let l = splitIt conteudo
+                            let l = separa conteudo
                             let inteiro = converteInteiro l
                             let valorNovo = 7  --  pontuação alcançada
                             let novoNome = "DEU" --  nome da pessoa com a nova pontuação
                             let novaListaInteiros = valorNovo : inteiro
                             conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = splitIt conteudo
+                            let listaNomes = separa conteudo
                             let novaListaNomes = novoNome : listaNomes 
                             print listaNomes
                             callCommand "clear"
@@ -224,7 +224,7 @@ main = do
                     else putStrLn "testes3"
 
         '2' -> do -- Ranking
-                cleanScreen
+                limpaTela
                 mostraRanking
                 sair <- getChar
                 main

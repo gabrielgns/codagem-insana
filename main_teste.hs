@@ -5,8 +5,8 @@ import Control.Concurrent
 import Data.Time
 --import Data.String.Utils
 import Data.List
-import FileFuncs
-import RandomFuncs
+import FuncoesArquivo
+import FuncoesRandomicas
 import Telas
 import Pontuacao
 import Cores
@@ -117,7 +117,7 @@ executarPartida palavras pontuacao = do
             if "Bonus"`elem`inputs && palavraBonus /= ""
                 then do
                     -- 80 % de chance de Bônus
-                    if randomInt 0 9 > 1 -- Executar funcão bônus
+                    if inteiroAleatorio 0 9 > 1 -- Executar funcão bônus
                         then executarPartida (tail palavras) (pontuacao + round pontuacaoAtual + 100000)
                     else do -- Executar funcão ônus
                         let restoPartida = drop 3 palavras
@@ -129,7 +129,7 @@ executarPartida palavras pontuacao = do
                 -- Chamar próximo round normalmente
                 executarPartida (tail palavras) (pontuacao + round pontuacaoAtual)
     where
-        palavraBonus = palavrasBonus !! randomInt 0 9
+        palavraBonus = palavrasBonus !! inteiroAleatorio 0 9
         palavrasRound = case palavraBonus of "" -> head palavras
                                              _  -> head palavras ++ [palavraBonus]
         dificuldade = length (head palavras)
