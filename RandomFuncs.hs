@@ -1,9 +1,11 @@
 module RandomFuncs
-(randomInt,
+(
+randomInt,
 randomWord,
 easyRound,
 mediumRound,
 hardRound,
+hardRoundGen,
 createStage
 )
 where
@@ -40,6 +42,14 @@ hardRound arr = do
 	let ret2 = (arr !! (randomInt 0 ((length arr)-1))) : ret1
 	let ret3 = (arr !! (randomInt 0 ((length arr)-1))) : ret2
 	return ret3 !! 0
+
+hardRoundGen :: [String] -> [[String]] -> [[String]]
+hardRoundGen [] [[]]= [["None"]]
+hardRoundGen arr setArr = do
+	let array = setArr ++ [(hardRound arr)]
+	let array1 = array ++ [(hardRound arr)]
+	let array2 = array1 ++ [(hardRound arr)]
+	return array2!!0
 
 createStage :: [String] -> [[String]]
 createStage [] = [["None"]]
