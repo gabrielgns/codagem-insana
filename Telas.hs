@@ -3,6 +3,7 @@ module Telas
 (   menuPrincipal
 ,   menuSelecaoFase
 ,   telaEntrarRanking
+,   gerarTelaRanking
 ,   telaFracasso
 -- Funções
 ,   gerarTelaRound
@@ -131,8 +132,22 @@ gerarAreaPalavras palavras
 
 gerarBarraStatus :: Int -> String
 gerarBarraStatus pontos =
-    colorir ("Pontuação: " ++ show pontos) fundoAzul  ++ "\n"
+    colorir ("Pontuação: " ++ show pontos) fundoCiano  ++ "\n"
 
+
+gerarTelaRanking :: [String] -> [Int] -> String
+gerarTelaRanking nomes pontos =
+    take 7 (cycle "\n") ++
+    colorir (centralizar "Ranking os mais INSANOS") fundoCiano ++ "\n" ++ 
+    gerarNomesRanking nomes pontos 1
+
+gerarNomesRanking :: [String] -> [Int] -> Int -> String
+gerarNomesRanking (hNo:tNo) (hPo:tPo) p = 
+    centralizar (show p ++ ". " ++ hNo ++ take 18 (cycle " - ") ++ show hPo) ++ "\n" ++ 
+    gerarNomesRanking tNo tPo (p+1)
+gerarNomesRanking [nome] [ponto] pos = 
+    centralizar (show pos ++ ". " ++ nome ++ take 18 (cycle " - ") ++ show ponto)
+gerarNomesRanking [] [] p = ""
 
 substituir :: String -> String -> String -> [String]
 substituir plvr nvPlvr txt = do

@@ -1,271 +1,180 @@
-import Cores
-import Pontuacao
-import FuncoesRandomicas
-import Telas
-import FuncoesArquivo
 import System.Process
 import System.IO
+import Control.Monad
+import Control.Concurrent 
+import Data.Time
+--import Data.String.Utils
+import Data.List
+import FuncoesArquivo
+import FuncoesRandomicas
+import Telas
+import Pontuacao
+import Cores
+--import Menus
 
-limpaTela = do
-    system "cls"
-    system "clear"
+verificaPalavrasDigitadas :: [String] -> [String] -> [String]
+verificaPalavrasDigitadas plvrDig plvrCorr
+    | null plvrDig = [] 
+    | indPlvrCorr == -1 = verificaPalavrasDigitadas (tail plvrDig) plvrCorr
+    | indPlvrCorr /= -1 = [plvrCorr !! indPlvrCorr] ++ verificaPalavrasDigitadas (tail plvrDig) nvLista
+
+    where
+        indPlvrCorr = buscaIndice (head plvrDig) plvrCorr 0
+        nvLista = [p | p <- plvrCorr, p /= (plvrCorr !! indPlvrCorr)]
 
 
+
+buscaIndice :: String -> [String] -> Int -> Int
+buscaIndice plvr lista ind
+    | null lista = -1
+    | head lista == plvr = ind
+    | otherwise = buscaIndice plvr (tail lista) (ind + 1)
+
+colorirPalavrasRound :: [String] -> String -> String
+colorirPalavrasRound plvrCorr t
+    | null plvrCorr = t
+    | otherwise = colorirPalavrasRound (tail plvrCorr) (head $ substituir (head plvrCorr) (colorir (head plvrCorr) verde) t)
+
+diretorioLinguagens :: String
+diretorioLinguagens = "Linguagens/linguagem"
+
+linguagens :: [String]
+linguagens = ["Python", "Haskell", "Java"]
+
+main :: IO ()
 main = do
-    
-    {- Teste de Cores
-    putStrLn "Teste de Cores"
-    putStrLn (colorir "Teste" fundoAzul)
-    putStrLn (colorir "Outra linha" verde)
-    print (colorir "nao funciona se usar print" vermelho)
-    -}
-  -- Mostrar Menu Principal
+    -- Mostrar Menu Principal
     hSetBuffering stdin NoBuffering
-    limpaTela
+    limparTela
     putStr menuPrincipal
     comando <- getChar
 
     case comando of
         '1' -> do -- Selecionar Fase
-
-            limpaTela
+            limparTela
             putStr menuSelecaoFase
-            ipt <- getLine
+            fase <- getChar
 
-            if ipt == "q"
+            if fase `elem` ['A' .. 'z']
                 then main
-                else do 
+                else do
                     hSetBuffering stdin LineBuffering
 
-                    if ipt == "1"
-                        then do
-                            limpaTela
-                            
-                            conteudo <- readFile "Linguagens/linguagemPython.txt"
-                            let listaPython = separa conteudo
-                            let fasePython = createStage listaPython
-                            print fasePython
-                            callCommand "clear"
-                            let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
-                            let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
-                            let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
-                            --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
-                            let telaPalavras = gerarTelaRound roundFacil 10000
-                            --let telaPalavras1 = gerarTelaRound roundMedio 10000
-                            --let telaPalavras2 = gerarTelaRound roundDificil 10000
-                            conteudo <- readFile "Ranking/numeros.txt"
-                            let l = separa conteudo
-                            let inteiro = converteInteiro l
-                            let valorNovo = 7  --  pontuação alcançada
-                            let novoNome = "DEU" --  nome da pessoa com a nova pontuação
-                            let novaListaInteiros = valorNovo : inteiro
-                            conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = separa conteudo
-                            let novaListaNomes = novoNome : listaNomes 
-                            print listaNomes
-                            callCommand "clear"
-                            
-                            let rankingDesordenado = zip novaListaInteiros novaListaNomes
-                            let rankingOrdenado = ordena rankingDesordenado
-                            let rankingAtualizado = excluiMenor rankingOrdenado
-                            let tuplaUm = rankingAtualizado !!0
-                            let tuplaDois = rankingAtualizado !!1
-                            let tuplaTres = rankingAtualizado !!2
-                            let nomeTres = snd tuplaTres
-                            let nomeDois = snd tuplaDois
-                            let nomeUm = snd tuplaUm
-                            let valorTres = fst tuplaTres
-                            let valorDois = fst tuplaDois
-                            let valorUm = fst tuplaUm
-                            let nomeEspacoTres = somaEspaco nomeTres
-                            let nomeEspacoDois = somaEspaco nomeDois
-                            let valorTresEspaco = somaEspaco (show valorTres)
-                            let valorDoisEspaco = somaEspaco (show valorDois)
-                            writeFile "Ranking/nomes.txt" nomeEspacoTres
-                            appendFile "Ranking/nomes.txt" nomeEspacoDois
-                            appendFile "Ranking/nomes.txt" nomeUm
-                            writeFile "Ranking/nomes.txt" valorTresEspaco
-                            appendFile "Ranking/nomes.txt" valorDoisEspaco
-                            appendFile "Ranking/nomes.txt" (show valorUm)
-                            --
-                            writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
-                            appendFile "Ranking/rankingNumeros.txt" ("1. " ++ nomeTres)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
-                            appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ nomeDois)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
-                            appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ nomeUm)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
-                            putStr (telaPalavras)
-                            teste <- getLine
-                            print teste
+                    -- Carregar palavras da linguagem
+                    let linguagem = linguagens !! (read [fase]-1)
+                        arquivoLinguagem = diretorioLinguagens ++ linguagem ++ ".txt"
 
-                    else if ipt == "2"
-                        then do
-                            limpaTela
-                            --
-                            conteudo <- readFile "Linguagens/linguagemHaskell.txt"
-                            let listaPython = separa conteudo
-                            let fasePython = createStage listaPython
-                            print fasePython
-                            callCommand "clear"
-                            let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
-                            let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
-                            let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
-                            --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
-                            let telaPalavras = gerarTelaRound roundFacil 10000
-                            --let telaPalavras1 = gerarTelaRound roundMedio 10000
-                            --let telaPalavras2 = gerarTelaRound roundDificil 10000
-                            conteudo <- readFile "Ranking/numeros.txt"
-                            let l = separa conteudo
-                            let inteiro = converteInteiro l
-                            let valorNovo = 7  --  pontuação alcançada
-                            let novoNome = "DEU" --  nome da pessoa com a nova pontuação
-                            let novaListaInteiros = valorNovo : inteiro
-                            conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = separa conteudo
-                            let novaListaNomes = novoNome : listaNomes 
-                            print listaNomes
-                            callCommand "clear"
-                            
-                            let rankingDesordenado = zip novaListaInteiros novaListaNomes
-                            let rankingOrdenado = ordena rankingDesordenado
-                            let rankingAtualizado = excluiMenor rankingOrdenado
-                            let tuplaUm = rankingAtualizado !!0
-                            let tuplaDois = rankingAtualizado !!1
-                            let tuplaTres = rankingAtualizado !!2
-                            let nomeTres = snd tuplaTres
-                            let nomeDois = snd tuplaDois
-                            let nomeUm = snd tuplaUm
-                            let valorTres = fst tuplaTres
-                            let valorDois = fst tuplaDois
-                            let valorUm = fst tuplaUm
-                            let nomeEspacoTres = somaEspaco nomeTres
-                            let nomeEspacoDois = somaEspaco nomeDois
-                            let valorTresEspaco = somaEspaco (show valorTres)
-                            let valorDoisEspaco = somaEspaco (show valorDois)
-                            writeFile "Ranking/nomes.txt" nomeEspacoTres
-                            appendFile "Ranking/nomes.txt" nomeEspacoDois
-                            appendFile "Ranking/nomes.txt" nomeUm
-                            writeFile "Ranking/nomes.txt" valorTresEspaco
-                            appendFile "Ranking/nomes.txt" valorDoisEspaco
-                            appendFile "Ranking/nomes.txt" (show valorUm)
-                            --
-                            writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
-                            appendFile "Ranking/rankingNumeros.txt" ("1. " ++ nomeTres)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
-                            appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ nomeDois)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
-                            appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ nomeUm)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
-                            putStr (telaPalavras)
-                            teste <- getLine
-                            print teste
+                    conteudo <- readFile arquivoLinguagem
+
+                    let palavrasLinguagem = separa conteudo
+                        palavrasPartida = createStage palavrasLinguagem
+                    print palavrasPartida -- precisa desse print pra nao dar erro
+                    limparTela
+
+                    -- Executar Partida
+                    executarPartida linguagem [head palavrasPartida] 0
+                    main
                     
-                    else if ipt == "3"
-                        then do
-                            limpaTela
-                            --
-                            conteudo <- readFile "Linguagens/linguagemJava.txt"
-                            let listaPython = separa conteudo
-                            let fasePython = createStage listaPython
-                            print fasePython
-                            callCommand "clear"
-                            let roundFacil = (fasePython !! 0 ++ fasePython !! 1++fasePython !! 2)
-                            let roundMedio = (fasePython !! 3 ++ fasePython !! 4 ++ fasePython !! 5)
-                            let roundDificil = (fasePython !! 6 ++ fasePython !! 7 ++ fasePython !! 8 ++ fasePython !! 9)
-                            --let roundDificilExtra = (fasePython !! 8 ++ fasePython !! 9 ++ fasePython !! 10)
-                            let telaPalavras = gerarTelaRound roundFacil 10000
-                            --let telaPalavras1 = gerarTelaRound roundMedio 10000
-                            --let telaPalavras2 = gerarTelaRound roundDificil 10000
-                            conteudo <- readFile "Ranking/numeros.txt"
-                            let l = separa conteudo
-                            let inteiro = converteInteiro l
-                            let valorNovo = 7  --  pontuação alcançada
-                            let novoNome = "DEU" --  nome da pessoa com a nova pontuação
-                            let novaListaInteiros = valorNovo : inteiro
-                            conteudo <- readFile "Ranking/nomes.txt"
-                            let listaNomes = separa conteudo
-                            let novaListaNomes = novoNome : listaNomes 
-                            print listaNomes
-                            callCommand "clear"
-                            let rankingDesordenado = zip novaListaInteiros novaListaNomes
-                            let rankingOrdenado = ordena rankingDesordenado
-                            let rankingAtualizado = excluiMenor rankingOrdenado
-                            let tuplaUm = rankingAtualizado !!0
-                            let tuplaDois = rankingAtualizado !!1
-                            let tuplaTres = rankingAtualizado !!2
-                            let nomeTres = snd tuplaTres
-                            let nomeDois = snd tuplaDois
-                            let nomeUm = snd tuplaUm
-                            let valorTres = fst tuplaTres
-                            let valorDois = fst tuplaDois
-                            let valorUm = fst tuplaUm
-                            let nomeEspacoTres = somaEspaco nomeTres
-                            let nomeEspacoDois = somaEspaco nomeDois
-                            let valorTresEspaco = somaEspaco (show valorTres)
-                            let valorDoisEspaco = somaEspaco (show valorDois)
-                            writeFile "Ranking/nomes.txt" nomeEspacoTres
-                            appendFile "Ranking/nomes.txt" nomeEspacoDois
-                            appendFile "Ranking/nomes.txt" nomeUm
-                            writeFile "Ranking/nomes.txt" valorTresEspaco
-                            appendFile "Ranking/nomes.txt" valorDoisEspaco
-                            appendFile "Ranking/nomes.txt" (show valorUm)
-                            --
-                            writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
-                            appendFile "Ranking/rankingNumeros.txt" ("1. " ++ nomeTres)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorTres) ++ " Pontos")
-                            appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ nomeDois)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorDois) ++ " Pontos")
-                            appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ nomeUm)
-                            appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ (show valorUm) ++ " Pontos")
-                            putStr (telaPalavras)
-                            teste <- getLine
-                            print teste
-                    else putStrLn "testes3"
-
         '2' -> do -- Ranking
-                limpaTela
-                mostraRanking
-                sair <- getChar
-                main
+            limparTela
+            mostraRanking
+            sair <- getChar
+            main
 
         _ -> do -- Fechar o jogo
             system "clear"
             return ()
-                
+
+limparTela = do
+    system "cls"
+    system "clear"
+
+
+executarPartida :: String -> [[String]] -> Int -> IO ()
+executarPartida linguagem palavras pontuacao = do
+    if null palavras -- Partida acabou
+        then do -- Analisar pontuacao final
+            limparTela
+            putStrLn("Pontuação Final: " ++ show pontuacao)
             
-                   
-{-  Teste Números Aleatórios
+            conteudo <- readFile "Ranking/numeros.txt"
+            
+            let textoRanking = separa conteudo
+                pontuacoesRanking = converteInteiro textoRanking
+                ranking = sort pontuacoesRanking
 
-    --Numeros que definem o range
-    let lis = ["0","1","2","3","4","5","6","7","8","9"]
-    print ((createStage lis))
+            if pontuacao > head ranking -- Salvar nome e pontuacao no ranking
+                then do
+                    conteudo <- readFile "Ranking/nomes.txt"
+                    let listaNomes = separa conteudo
+                    print listaNomes
+                    limparTela
+                    
+                    putStrLn (colorir "Chegou a sua hora de entrar para o ranking dos mais INSANOS\nDigite o seu nome:" fundoAmarelo)
+                    nomeJogador <- getLine
 
-    k <- getLine
-    n <- getLine
+                    let novaListaInteiros = pontuacao : ranking
+                        novaListaNomes = (take 3 nomeJogador) : listaNomes
+                        rankingDesordenado = zip novaListaInteiros novaListaNomes
+                        rankingOrdenado = ordena rankingDesordenado
+                        rankingAtualizado = excluiMenor rankingOrdenado
+                    
+                    writeFile "Ranking/nomes.txt" (concat [" " ++ x | x <- snd $ unzip rankingAtualizado])
+                    writeFile "Ranking/numeros.txt" (concat [" " ++ show x | x <- fst $ unzip rankingAtualizado])
+                    writeFile "Ranking/rankingNumeros.txt" (gerarTelaRanking (snd $ unzip rankingAtualizado) (fst $ unzip rankingAtualizado))
+                    main
+                    
+                else do -- Ir para o menu principal
+                    putStr telaFracasso
+                    getChar
+                    main
+            
+        else do
+            let tela = gerarTelaRound palavrasRound pontuacao
+            -- Execução do Round
+            inicioRound <- getCurrentTime
 
-    let ki = (read k:: Integer)
-    let ni = (read n:: Integer)
+            inputs <- forM palavrasRound (\a -> do
+                limparTela
+                putStr tela
+                getLine)
 
-    print "testando funcao que gera numeros aleatorios em um range especifico"
-    o <- randNumberR (ki,ni)
-    print o
+            finalRound <- getCurrentTime
+            let tempo = realToFrac (toRational(diffUTCTime finalRound inicioRound))
 
-    --Test setOfIntegerRN && setOfFloatRN
-    let lis = ["0","1","2","3","4","5","6","7","8","9","10","11","12"]
-    let len = toInteger(length lis)
-    g <- randNumberR (0,len)
-    print "index"
-    print g
+            -- Validação das palavras digitadas
+            let palavrasCorretas = verificaPalavrasDigitadas inputs palavrasRound
+                pontuacaoAtual = calculaPontos tempo dificuldade (length palavrasCorretas)
+            limparTela
+            putStr $ colorirPalavrasRound palavrasCorretas tela
 
-    print "elemento"
-    print (lis !! (fromIntegral g))
+            threadDelay 1000000 -- Dar tempo do player ver as palavras em verde
+            
+            -- Executar, ou não, as funções da palavra bonus
+            if "Bonus"`elem`inputs && palavraBonus /= ""
+                then do
+                    if inteiroAleatorio 0 9 > 1 -- Executar funcão bônus
+                        then executarPartida linguagem (tail palavras) (pontuacao + round pontuacaoAtual + 100000)
 
-    print "testando funcao que gera n numeros aleatorios (float)"
-    testFloat <- setOfFloatRN 10
-    print (testFloat)
+                    else do -- Executar funcão ônus (pular 3 rounds)
+                        let arquivoLinguagem = diretorioLinguagens ++ linguagem ++ ".txt"
 
-    print "testando funcao que gera n numeros aleatorios (int)"
-    testInt <- setOfIntegerRN 10
-    print (testInt)
--}
+                        conteudo <- readFile arquivoLinguagem
+
+                        let palavrasLinguagem = separa conteudo
+                            restoDaPartida = roundDificilGen palavrasLinguagem (drop 3 palavras)
+                        print restoDaPartida
+                        limparTela
+                        -- Aqui continua a execucao com os rounds a mais
+                        executarPartida linguagem restoDaPartida (pontuacao + round pontuacaoAtual)
+
+            else do
+                -- Chamar próximo round normalmente
+                executarPartida linguagem (tail palavras) (pontuacao + round pontuacaoAtual)
+    where
+        palavraBonus = palavrasBonus !! inteiroAleatorio 0 9
+        palavrasRound = case palavraBonus of "" -> head palavras
+                                             _  -> head palavras ++ [palavraBonus]
+        dificuldade = length (head palavras)
+
+palavrasBonus = take 10 (cycle ["", colorir "Bonus" amarelo, ""])
