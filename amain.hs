@@ -65,10 +65,10 @@ main = do
                         arquivoLinguagem = diretorioLinguagens ++ linguagem ++ ".txt"
 
                     conteudo <- readFile arquivoLinguagem
-                    
+
                     let palavrasLinguagem = separa conteudo
                         palavrasPartida = createStage palavrasLinguagem
-                    print palavrasPartida
+                    print palavrasPartida -- precisa desse print pra nao dar erro
                     limparTela
 
                     -- Executar Partida
@@ -93,14 +93,50 @@ limparTela = do
 executarPartida :: String -> [[String]] -> Int -> IO ()
 executarPartida linguagem palavras pontuacao = do
     if null palavras -- Partida acabou
-        then do
+        then do -- Analisar pontuacao final
             limparTela
             putStrLn("Pontuação Final: " ++ show pontuacao)
-            {-
-            1. Verificar se a pontuação é suficiente para entrar
-            no ranking
-            2. Pedir (ou não) o nome do jogador e salvar a pontuacao
-            -}
+            
+            conteudo <- readFile "Ranking/numeros.txt"
+            
+            let textoRanking = separa conteudo
+                pontuacoesRanking = converteInteiro textoRanking
+                ranking = sort pontuacoesRanking
+
+            if pontuacao > head ranking -- Salvar nome e pontuacao no ranking
+                then do
+                    conteudo <- readFile "Ranking/nomes.txt"
+                    let listaNomes = separa conteudo
+                    print listaNomes
+                    limparTela
+                    
+                    putStrLn "Chegou a sua hora de entrar para o ranking dos mais INSANOS\nDigite o seu nome:"
+                    nomeJogador <- getLine
+
+                    let novaListaInteiros = pontuacao : ranking
+                        novaListaNomes = nomeJogador : listaNomes
+                        rankingDesordenado = zip novaListaInteiros novaListaNomes
+                        rankingOrdenado = ordena rankingDesordenado
+                        rankingAtualizado = excluiMenor rankingOrdenado
+                    
+                    writeFile "Ranking/nomes.txt" (concat [" " ++ x | x <- snd $ unzip rankingAtualizado])
+                    writeFile "Ranking/numeros.txt" (concat [" " ++ show x | x <- fst $ unzip rankingAtualizado])
+
+                    writeFile "Ranking/rankingNumeros.txt" "Ranking: \n"
+                    appendFile "Ranking/rankingNumeros.txt" ("1. " ++ (snd $ unzip rankingAtualizado) !! 2)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ show ((fst $ unzip rankingAtualizado) !! 2) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n2. " ++ (snd $ unzip rankingAtualizado) !! 1)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ show ((fst $ unzip rankingAtualizado) !! 1) ++ " Pontos")
+                    appendFile "Ranking/rankingNumeros.txt" ("\n3. " ++ (snd $ unzip rankingAtualizado) !! 0)
+                    appendFile "Ranking/rankingNumeros.txt" (" ------------ " ++ show ((fst $ unzip rankingAtualizado) !! 0) ++ " Pontos")
+
+                    main
+                    
+                else do -- Ir para o menu principal
+                    putStr telaFracasso
+                    getChar
+                    main
+            
         else do
             let tela = gerarTelaRound palavrasRound pontuacao
             -- Execução do Round
@@ -129,15 +165,14 @@ executarPartida linguagem palavras pontuacao = do
                         then executarPartida linguagem (tail palavras) (pontuacao + round pontuacaoAtual + 100000)
 
                     else do -- Executar funcão ônus (pular 3 rounds)
-                        let restoPartida = drop 3 palavras
-                            arquivoLinguagem = diretorioLinguagens ++ linguagem ++ ".txt"
+                        let arquivoLinguagem = diretorioLinguagens ++ linguagem ++ ".txt"
 
-                        limparTela
                         conteudo <- readFile arquivoLinguagem
-                    
-                        let palavrasLinguagem = separa conteudo
-                            restoDaPartida = roundDificilGen palavrasLinguagem restoPartida
 
+                        let palavrasLinguagem = separa conteudo
+                            restoDaPartida = roundDificilGen palavrasLinguagem (drop 3 palavras)
+                        print restoDaPartida
+                        limparTela
                         -- Aqui continua a execucao com os rounds a mais
                         executarPartida linguagem restoDaPartida (pontuacao + round pontuacaoAtual)
 

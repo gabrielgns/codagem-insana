@@ -15,13 +15,13 @@ import System.Process
 separa :: String -> [String]
 separa palavra = words palavra
 
-converteInteiro :: [String] -> [Float]
+converteInteiro :: [String] -> [Int]
 converteInteiro = map read
 
-ordena :: [(Float,[Char])] -> [(Float,[Char])]
+ordena :: [(Int,[Char])] -> [(Int,[Char])]
 ordena lista = sort lista
 
-excluiMenor :: [(Float,[Char])] -> [(Float,[Char])]
+excluiMenor :: [(Int,[Char])] -> [(Int,[Char])]
 excluiMenor (x:xs) = xs
 
 somaEspaco :: String -> String

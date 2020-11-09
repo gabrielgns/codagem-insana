@@ -2,6 +2,8 @@ module Telas
 -- Telas
 (   menuPrincipal
 ,   menuSelecaoFase
+,   telaEntrarRanking
+,   telaFracasso
 -- Funções
 ,   gerarTelaRound
 ,   substituir
@@ -58,15 +60,14 @@ menuRanking =
 telaFracasso :: String
 telaFracasso =
     take 7 (cycle "\n") ++
-    centralizar "Você ainda não é INSANO o suficiente" ++ "\n" ++
+    colorir (centralizar "Você ainda não é INSANO o suficiente") vermelho ++ "\n" ++
     take 9 (cycle "\n")
 
 
 telaEntrarRanking :: String
 telaEntrarRanking =
     take 7 (cycle "\n") ++
-    centralizar "Parabéns seu nome será lembrado por todos" ++ "\n" ++
-    take 9 (cycle "\n")
+    centralizar "Chegou a sua hora de entrar para o ranking dos mais INSANOS"
 
 telaFinal :: String
 telaFinal =
