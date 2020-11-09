@@ -72,7 +72,7 @@ main = do
                     limparTela
 
                     -- Executar Partida
-                    executarPartida linguagem [head palavrasPartida] 0
+                    executarPartida linguagem palavrasPartida 0
                     main
                     
         '2' -> do -- Ranking
@@ -116,12 +116,12 @@ executarPartida linguagem palavras pontuacao = do
                     let novaListaInteiros = pontuacao : ranking
                         novaListaNomes = (take 3 nomeJogador) : listaNomes
                         rankingDesordenado = zip novaListaInteiros novaListaNomes
-                        rankingOrdenado = ordena rankingDesordenado
-                        rankingAtualizado = excluiMenor rankingOrdenado
+                        rankingOrdenado = reverse (ordena rankingDesordenado)
+                        rankingAtualizado = take 3 rankingOrdenado
                     
                     writeFile "Ranking/nomes.txt" (concat [" " ++ x | x <- snd $ unzip rankingAtualizado])
                     writeFile "Ranking/numeros.txt" (concat [" " ++ show x | x <- fst $ unzip rankingAtualizado])
-                    writeFile "Ranking/rankingNumeros.txt" (gerarTelaRanking (snd $ unzip rankingAtualizado) (fst $ unzip rankingAtualizado))
+                    writeFile "Ranking/rankingNumeros.txt" (gerarTelaRanking  (snd $ unzip rankingAtualizado) (fst $ unzip rankingAtualizado))
                     main
                     
                 else do -- Ir para o menu principal
