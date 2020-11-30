@@ -7,17 +7,17 @@ repeat(Str,Num,Res):-
 
 nEspacos(Tamanho_string, Quantidade):-
     Quantidade is 35 - (Tamanho_string / 2).
-/* função só está funcionando com comm string pares */
+
 centralizar(Str):-
     atom_length(Str,Tamanho_string),
     nEspacos(Tamanho_string, Quantidade),
-    repeat(" ",Quantidade,Res),
+    repeat(" ",integer(Quantidade),Res),
     atom_concat(Res, Str ,Answer),
     atom_concat(Answer, Res ,A),
     write(A).
 
 main:-
-    centralizar("eu n entendi foi"),
+    centralizar("lucas"),
     get_char(C).
 
 
