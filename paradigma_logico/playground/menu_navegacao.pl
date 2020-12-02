@@ -1,8 +1,37 @@
 limpa_tela:- write('\e[H\e[2J').
 
+% Início do código para centralizar
+repeat(Str,1,Str).
+
+repeat(Str,Num,Res):-
+    Num1 is Num-1,
+    repeat(Str,Num1,Res1),
+    string_concat(Str, Res1, Res).
+
+nEspacos(Tamanho_string, Quantidade):-
+    Quantidade is 35 - (Tamanho_string / 2).
+
+centralizar(Str):-
+    atom_length(Str,Tamanho_string),
+    nEspacos(Tamanho_string, Quantidade),
+    repeat(" ",integer(Quantidade),Res),
+    atom_concat(Res, Str ,Answer),
+    atom_concat(Answer, Res ,A),
+    write(A).
+% Fim do código para centralizar
+
 menu_principal:-
     limpa_tela,
-    write("Menu Principal"),
+    repeat("\n", 7, Espacos),
+    write(Espacos),
+    write("                             "),
+    ansi_format([bold,bg(red)], '~w', ["Codagem Insana"]), nl,
+    centralizar("[1] - Iniciar Jogo"), nl,
+    centralizar("[2] - Ranking"), nl,
+    centralizar("[q] - Sair do Jogo "), nl,
+    repeat("\n",9,R),
+    centralizar("centro"),
+    write(R),
     nl,
     get_single_char(Comando),
     (   Comando == 49
