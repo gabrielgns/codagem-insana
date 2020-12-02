@@ -11,15 +11,44 @@ repeat(Str,Num,Espacos):-
     repeat(Str,Num1,Espacos1),
     string_concat(Str, Espacos1, Espacos).
 
+% Início do código para centralizar
+nEspacos(Tamanho_string, Quantidade):-
+    Quantidade is 35 - (Tamanho_string / 2).
+
+centralizar(Str):-
+    atom_length(Str,Tamanho_string),
+    nEspacos(Tamanho_string, Quantidade),
+    repeat(" ",integer(Quantidade),Res),
+    atom_concat(Res, Str ,Answer),
+    atom_concat(Answer, Res ,A),
+    write(A).
+
+centralizar_color_red(Str):-
+    atom_length(Str,Tamanho_string),
+    nEspacos(Tamanho_string, Quantidade),
+    repeat(" ",integer(Quantidade),Res),
+    atom_concat(Res, Str ,Answer),
+    atom_concat(Answer, Res ,A),
+    ansi_format([bold,bg(red)], '~w', [A]).
+
+centralizar_color_cyan(Str):-
+    atom_length(Str,Tamanho_string),
+    nEspacos(Tamanho_string, Quantidade),
+    repeat(" ",integer(Quantidade),Res),
+    atom_concat(Res, Str ,Answer),
+    atom_concat(Answer, Res ,A),
+    ansi_format([bold,bg(red)], '~w', [A]).
+% Fim do código para centralizar
+
 
 tela_menu_principal:-
     limpa,
     repeat("\n", 7, Espacos),
     write(Espacos),
-    ansi_format([bold,bg(red)], '~w', ["Codagem Insana"]), nl,
-    write("[1] - Iniciar Jogo"), nl,
-    write("[2] - Ranking"), nl,
-    write("[q] - Sair do Jogo "), nl,
+    centralizar_color_red("Codagem Insana"), nl,
+    centralizar("[1] - Iniciar Jogo  "), nl,
+    centralizar("[2] - Ranking       "), nl,
+    centralizar("[q] - Sair do Jogo  "), nl,
     repeat("\n",9,R),
     write(R).
 
@@ -29,16 +58,15 @@ tela_selecao_fase:-
     limpa,
     repeat("\n", 6, Espacos),
     write(Espacos),
-    repeat(" ", 27, T),
     %write(T),
     string_concat(T, "Seleção de Fase", Titulo1),
     string_concat(Titulo1, T, Titulo2),
-    ansi_format([bold,bg(red)], '~w', [Titulo2  ]), nl,
-    write("[1] - Python"), nl,
-    write("[2] - Java"), nl,
-    write("[3] - Haskell"), nl,
-    write("[4] - Prolog"), nl,
-    write("[_] - Menu Principal"), nl,
+    centralizar_color_red(Titulo2), nl,
+    centralizar("[1] - Python        "), nl,
+    centralizar("[2] - Java          "), nl,
+    centralizar("[3] - Haskell       "), nl,
+    centralizar("[4] - Prolog        "), nl,
+    centralizar("[_] - Menu Principal"), nl,
     repeat("\n", 8, R),
     write(R).
 
@@ -46,12 +74,12 @@ tela_selecao_ranking:-
     limpa,
     repeat("\n", 7, Espacos),
     write(Espacos),
-    ansi_format([bold,bg(cyan)], '~w', ["Rankings"]), nl,
-    write("[1] - Python"), nl,
-    write("[2] - Java"), nl,
-    write("[3] - Haskell"), nl,
-    write("[4] - Prolog"), nl,
-    write("[_] - Menu Principal"), nl,
+    centralizar_color_cyan("Rankings"), nl,
+    centralizar("[1] - Python        "), nl,
+    centralizar("[2] - Java          "), nl,
+    centralizar("[3] - Haskell       "), nl,
+    centralizar("[4] - Prolog        "), nl,
+    centralizar("[_] - Menu Principal"), nl,
     repeat("\n",9,R),
     write(R).
 
@@ -60,8 +88,8 @@ tela_vitoria(Nome):-
     repeat("\n", 7, Espacos),
     write(Espacos),
     textos(vitoria, T),
-    ansi_format([bold,bg(cyan)], '~w', [T]), nl,
-    write("Digite o seu nome (3 letras): "), nl,
+    centralizar_color_cyan(T), nl,
+    centralizar("Digite o seu nome (3 letras): "), nl,
     write(Espacos),
     read(Nome).
     %read_string(3, Nome), nl.
@@ -72,12 +100,12 @@ tela_derrota:-
     repeat("\n", 7, Espacos),
     write(Espacos),
     textos(derrota, T),
-    ansi_format([bold,bg(red)], '~w', [T]), nl,
+    centralizar_color_red(T), nl,
     write(Espacos),
-    write("Aperte qualquer tecla para voltar para o menu").
+    centralizar("Aperte qualquer tecla para voltar para o menu").
 
 
 main:-
-   tela_derrota,
+   tela_selecao_fase,
    get_single_char(_),
    nl, halt.
