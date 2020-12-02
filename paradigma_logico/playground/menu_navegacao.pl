@@ -18,19 +18,25 @@ centralizar(Str):-
     atom_concat(Res, Str ,Answer),
     atom_concat(Answer, Res ,A),
     write(A).
+
+centralizar_color(Str):-
+    atom_length(Str,Tamanho_string),
+    nEspacos(Tamanho_string, Quantidade),
+    repeat(" ",integer(Quantidade),Res),
+    atom_concat(Res, Str ,Answer),
+    atom_concat(Answer, Res ,A),
+    ansi_format([bold,bg(red)], '~w', [A]).
 % Fim do código para centralizar
 
 menu_principal:-
     limpa_tela,
     repeat("\n", 7, Espacos),
     write(Espacos),
-    write("                             "),
-    ansi_format([bold,bg(red)], '~w', ["Codagem Insana"]), nl,
+    centralizar_color("Codagem Insana"), nl,
     centralizar("[1] - Iniciar Jogo"), nl,
     centralizar("[2] - Ranking"), nl,
     centralizar("[q] - Sair do Jogo "), nl,
     repeat("\n",9,R),
-    centralizar("centro"),
     write(R),
     nl,
     get_single_char(Comando),
