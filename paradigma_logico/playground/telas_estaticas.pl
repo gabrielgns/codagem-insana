@@ -37,7 +37,7 @@ centralizar_color_cyan(Str):-
     repeat(" ",integer(Quantidade),Res),
     atom_concat(Res, Str ,Answer),
     atom_concat(Answer, Res ,A),
-    ansi_format([bold,bg(red)], '~w', [A]).
+    ansi_format([bold,bg(cyan)], '~w', [A]).
 % Fim do código para centralizar
 
 
@@ -58,10 +58,11 @@ tela_selecao_fase:-
     limpa,
     repeat("\n", 6, Espacos),
     write(Espacos),
+    repeat(" ", 27, T),
     %write(T),
     string_concat(T, "Seleção de Fase", Titulo1),
     string_concat(Titulo1, T, Titulo2),
-    centralizar_color_red(Titulo2), nl,
+    ansi_format([bold,bg(red)], '~w', [Titulo2  ]), nl,
     centralizar("[1] - Python        "), nl,
     centralizar("[2] - Java          "), nl,
     centralizar("[3] - Haskell       "), nl,
@@ -106,6 +107,6 @@ tela_derrota:-
 
 
 main:-
-   tela_selecao_fase,
+   tela_vitoria("NAME"),
    get_single_char(_),
    nl, halt.
