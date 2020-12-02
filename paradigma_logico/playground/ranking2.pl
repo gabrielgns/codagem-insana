@@ -35,6 +35,8 @@ ranking(Nome, Lista_nomes, Lista_pontuacoes):-
     nth1(3, Lista_pontuacoes, Pontuacao3),
 
     atom_concat("Ranking da Linguagem ", Nome,Answer1),
+    repeat("\n",7,Res),
+    write(Res),
     centralizar_color(Answer1), nl, nl,
 
     atom_concat("1. ", Nome1 ,Answer15),
@@ -50,7 +52,10 @@ ranking(Nome, Lista_nomes, Lista_pontuacoes):-
     string_concat("3. ", Nome3,Answer21),
     string_concat(Answer21, " .......... " ,Answer22),
     string_concat(Answer22, Pontuacao3 ,Answer23),
-    centralizar(Answer23), nl.
+    centralizar(Answer23), nl,
+
+    repeat("\n",9,R),
+    write(R).
 
 
 main:-
