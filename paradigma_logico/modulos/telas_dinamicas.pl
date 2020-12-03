@@ -1,4 +1,4 @@
-:- module(telas_dinamicas, [tela_round/4, tela_palavras_corrigidas/5]).
+:- module(telas_dinamicas, [tela_round/4, tela_palavras_corrigidas/5, offsets_verticais/2, offsets_horizontais/2]).
 
 :- use_module(library(random), [random_between/3]).
 :- use_module(library(lists), [member/2]).
@@ -25,8 +25,6 @@ centralizar(Str):-
 tela_round(Palavras, Pont, V, H):-
     tela(limpa),
     length(Palavras, N),
-    offsets_verticais(N, V),
-    offsets_horizontais(Palavras, H),
     area_palavras(Palavras, V, H),
     completa_tela_round(N, V),
     barra_pontuacao(Pont).
@@ -62,7 +60,8 @@ area_palavras_corrigidas(PC, [P|PR], [OV|ROV], [OH|ROH]):-
 
 
 barra_pontuacao(Pontuacao):-
-    string_concat("Pontuação: ", Pontuacao, Barra),
+    number_string(Pontuacao, P),
+    string_concat("Pontuação: ", P, Barra),
     ansi_format([bg(green)], '~w', [Barra]),
     nl.
 
