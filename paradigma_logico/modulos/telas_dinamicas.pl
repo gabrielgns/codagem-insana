@@ -1,8 +1,8 @@
-:- module(telas_dinamicas, [tela_round/4, tela_palavras_corrigidas/5, offsets_verticais/2, offsets_horizontais/2]).
+:- module(telas_dinamicas, [tela_ranking/3, tela_round/4, tela_palavras_corrigidas/5, offsets_verticais/2, offsets_horizontais/2]).
 
 :- use_module(library(random), [random_between/3]).
 :- use_module(library(lists), [member/2]).
-:- use_module(util, [repete_string/3, write_stringr/2, soma_lista/2, centralizar/1]).
+:- use_module(util, [repete_string/3, write_stringr/2, soma_lista/2, centraliza/1, centraliza_titulo/2]).
 :- use_module(telas, [tela/1]).
 
 
@@ -22,6 +22,39 @@ tela_palavras_corrigidas(Plvrs_acertadas, Palavras, Pont, V, H):-
     completa_tela_round(N, V),
     barra_pontuacao(Pont).
 
+
+tela_ranking(Nome, Lista_nomes, Lista_pontuacoes):-
+    tela(limpa),
+    nth0(0, Lista_nomes, Nome1),
+    nth0(1, Lista_nomes, Nome2),
+    nth1(3, Lista_nomes, Nome3),
+
+    nth0(0, Lista_pontuacoes, Pontuacao1),
+    nth0(1, Lista_pontuacoes, Pontuacao2),
+    nth1(3, Lista_pontuacoes, Pontuacao3),
+
+    atom_concat("Ranking da Linguagem ", Nome,Answer1),
+    repete_string("\n", 6,Res),
+    write(Res),
+    centraliza_titulo(Answer1, green), nl, nl,
+
+    atom_concat("1. ", Nome1 ,Answer15),
+    string_concat(Answer15, " .......... " ,Answer16),
+    string_concat(Answer16, Pontuacao1 ,Answer17),
+    centraliza(Answer17), nl,
+
+    string_concat("2. " ,Nome2, Answer18),
+    string_concat(Answer18, " .......... " ,Answer19),
+    string_concat(Answer19, Pontuacao2 ,Answer20),
+    centraliza(Answer20), nl,
+
+    string_concat("3. ", Nome3,Answer21),
+    string_concat(Answer21, " .......... " ,Answer22),
+    string_concat(Answer22, Pontuacao3 ,Answer23),
+    centraliza(Answer23), nl,
+
+    repete_string("\n",9,R),
+    write(R).
 
 % Componentes das telas
 area_palavras([], _, _).

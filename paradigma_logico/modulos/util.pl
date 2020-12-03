@@ -2,7 +2,9 @@
     [   repete_string/3,
         write_stringr/2,
         soma_lista/2,
-        centralizar/1
+        centraliza/1,
+        centraliza_titulo/2,
+        nEspacos/2
     ]
 ).
 
@@ -24,17 +26,27 @@ write_stringr(S, N):-
     write_stringr(S, N1).
 
 
-% centraliza um texto na tela
-centralizar(Str):-
+% Centraliza um texto na tela
+centraliza(Str):-
     atom_length(Str,Tamanho_string),
     nEspacos(Tamanho_string, Quantidade),
-    repeat(" ",integer(Quantidade),Res),
+    repete_string(" ",integer(Quantidade),Res),
     atom_concat(Res, Str ,Answer),
     atom_concat(Answer, Res ,A),
     write(A).
 
 
-% Função auxiliar de centralizar
+% Centraliza um texto e aplica uma cor e deixa em negrito
+centraliza_titulo(Str, Cor):-
+    atom_length(Str,Tamanho_string),
+    nEspacos(Tamanho_string, Quantidade),
+    repete_string(" ",integer(Quantidade),Res),
+    atom_concat(Res, Str ,Answer),
+    atom_concat(Answer, Res ,A),
+    ansi_format([bold, bg(Cor)], '~w', [A]).
+
+
+% Função auxiliar de centraliza
 nEspacos(Tamanho_string, Quantidade):-
     Quantidade is 35 - (Tamanho_string / 2).
 
