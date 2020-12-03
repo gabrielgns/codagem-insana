@@ -1,6 +1,7 @@
 :- module(util,
     [   repete_string/3,
-        write_stringr/2
+        write_stringr/2,
+        soma_lista/2
     ]
 ).
 
@@ -20,3 +21,9 @@ write_stringr(S, N):-
     write(S),
     N1 is N - 1,
     write_stringr(S, N1).
+
+% Soma todos os valores de uma lista de números
+soma_lista([], 0).
+soma_lista([H|T], R):-
+    soma_lista(T, R1),
+    R is H + R1.
