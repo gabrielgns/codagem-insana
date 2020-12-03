@@ -2,23 +2,8 @@
 
 :- use_module(library(random), [random_between/3]).
 :- use_module(library(lists), [member/2]).
-:- use_module(util, [repete_string/3, write_stringr/2, soma_lista/2]).
+:- use_module(util, [repete_string/3, write_stringr/2, soma_lista/2, centralizar/1]).
 :- use_module(telas, [tela/1]).
-/*
-    Substituir a funcao nEspacos e centralizar por um import
-    em centralizar de util
-*/
-nEspacos(Tamanho_string, Quantidade):-
-    Quantidade is 35 - (Tamanho_string / 2).
-
-
-centralizar(Str):-
-    atom_length(Str,Tamanho_string),
-    nEspacos(Tamanho_string, Quantidade),
-    repete_string(" ",integer(Quantidade),Res),
-    atom_concat(Res, Str ,Answer),
-    atom_concat(Answer, Res ,A),
-    write(A).
 
 
 % Telas Dinâmicas
