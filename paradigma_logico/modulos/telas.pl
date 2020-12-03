@@ -1,6 +1,6 @@
-:- module(telas, [tela/0]).
+:- module(telas, [tela/1]).
 
-:- use_module(utils, [repete_string/3, write_stringr/2]).
+:- use_module(util, [repete_string/3, write_stringr/2]).
 
 % Títulos das telas
 textos(vitoria, T):- T = "Chegou a sua hora de entrar para o ranking dos mais INSANOS".

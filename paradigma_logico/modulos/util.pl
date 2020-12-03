@@ -1,4 +1,4 @@
-:- module(utils,
+:- module(util,
     [   repete_string/3,
         write_stringr/2
     ]
