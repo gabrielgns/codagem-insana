@@ -1,5 +1,7 @@
-:- use_module(telas, [tela/1]).
-:- use_module(telas_dinamicas).
+:- use_module('modulos/telas', [tela/1]).
+:- use_module('modulos/telas_dinamicas').
+:- use_module('modulos/linguagens').
+
 
 menu_principal:-
     tela(menu),
