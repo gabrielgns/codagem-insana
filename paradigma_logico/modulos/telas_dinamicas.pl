@@ -1,4 +1,4 @@
-:- module(telas_dinamicas, [tela_round/4, tela_palavras_corrigidas/5, main/0]).
+:- module(telas_dinamicas, [tela_round/4, tela_palavras_corrigidas/5]).
 
 :- use_module(library(random), [random_between/3]).
 :- use_module(library(lists), [member/2]).
@@ -32,7 +32,7 @@ tela_round(Palavras, Pont, V, H):-
     barra_pontuacao(Pont).
 
 
-tela_palavras_corrigidas(Plvrs_acertadas, Palavras, V, H, Pont):-
+tela_palavras_corrigidas(Plvrs_acertadas, Palavras, Pont, V, H):-
     tela(limpa),
     length(Palavras, N),
     area_palavras_corrigidas(Plvrs_acertadas, Palavras, V, H),
