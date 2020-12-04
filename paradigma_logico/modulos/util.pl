@@ -4,7 +4,8 @@
         soma_lista/2,
         centraliza/1,
         centraliza_titulo/2,
-        nEspacos/2
+        nEspacos/2,
+        pegar_elementos/3
     ]
 ).
 
@@ -56,3 +57,10 @@ soma_lista([], 0).
 soma_lista([H|T], R):-
     soma_lista(T, R1),
     R is H + R1.
+
+
+% Pega os primeiros N elementos de uma lista
+pegar_elementos(0, _, []).
+pegar_elementos(N, [A|Y], [A|D]):-
+    N2 is N - 1,
+    pegar_elementos(N2, Y, D).
