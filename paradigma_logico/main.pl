@@ -1,6 +1,8 @@
 :- use_module('modulos/telas', [tela/1]).
 :- use_module('modulos/telas_dinamicas').
 :- use_module('modulos/linguagens').
+:- use_module('modulos/sorteio_palavras', [sortear_palavras_partida/2]).
+:- use_module('modulos/partida').
 
 
 menu_principal:-
@@ -33,7 +35,7 @@ selecao_fase:-
     tela(fases),
     get_single_char(Comando),
     (   Comando == 49
-    ->  write("Carregar Fase python")
+    ->  jogo(python)
     ;   Comando == 50
     ->  write("Carregar Fase Java")
     ;   Comando == 51
@@ -43,6 +45,15 @@ selecao_fase:-
     ;   menu_principal
     ).
 
+
+jogo(Linguagem):-
+    sortear_palavras_partida(Linguagem, Palavras_partida),
+    partida(Palavras_partida, 0, Pontuacao_final),
+    write(Pontuacao_final).
+    % ver se pode entrar no ranking
+    % chamar funcoes de inserir coisas no ranking ou
+    % imprimir tela de derrota
+    % ir pro menu_principal.
 
 main:-
     menu_principal,
