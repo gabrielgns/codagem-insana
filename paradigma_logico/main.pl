@@ -37,11 +37,11 @@ selecao_fase:-
     (   Comando == 49
     ->  jogo(python)
     ;   Comando == 50
-    ->  write("Carregar Fase Java")
+    ->  jogo(java)
     ;   Comando == 51
-    ->  write("Carregar Fase Haskell")
+    ->  jogo(haskell)
     ;   Comando == 52
-    ->  write("Carregar Fase Prolog")
+    ->  jogo(prolog)
     ;   menu_principal
     ).
 
@@ -49,7 +49,7 @@ selecao_fase:-
 jogo(Linguagem):-
     sortear_palavras_partida(Linguagem, Palavras_partida),
     partida(Palavras_partida, 0, Pontuacao_final),
-    write(Pontuacao_final).
+    write("Pontuacao_final: "), write(Pontuacao_final).
     % ver se pode entrar no ranking
     % chamar funcoes de inserir coisas no ranking ou
     % imprimir tela de derrota
