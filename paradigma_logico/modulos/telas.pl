@@ -63,8 +63,8 @@ tela_vitoria:-
     write_stringr("\n", 9),
     textos(vitoria, Texto_vitoria),
     centraliza_titulo(Texto_vitoria, cyan), nl,
-    write_stringr("\n", 9),
-    write("Digite o seu nome (3 letras): ").
+    write_stringr("\n", 8),
+    write("Digite o seu nome (3 letras): "), nl.
 
 
 tela_derrota:-

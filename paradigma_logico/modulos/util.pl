@@ -1,12 +1,14 @@
 :- module(util,
     [   repete_string/3,
         write_stringr/2,
-        soma_lista/2,
         centraliza/1,
         centraliza_titulo/2,
         nEspacos/2,
+        soma_lista/2,
         pegar_elementos/3,
-        remover_elementos/3
+        remover_elementos/3,
+        ultimo/2,
+        ler_nome/1
     ]
 ).
 
@@ -53,6 +55,12 @@ nEspacos(Tamanho_string, Quantidade):-
     Quantidade is 35 - (Tamanho_string / 2).
 
 
+ler_nome(String):-
+    read_string(user_input, 4, Entrada),
+    split_string(Entrada, "\n", "", Textos),
+    nth0(1, Textos, String).
+
+
 % Soma todos os valores de uma lista de números
 soma_lista([], 0).
 soma_lista([H|T], R):-
@@ -71,3 +79,8 @@ remover_elementos(0, X, X).
 remover_elementos(Q, [_|Y], D):-
     Q2 is Q - 1,
     remover_elementos(Q2, Y, D).
+
+ultimo([], []).
+ultimo([X], X).
+ultimo([_ | T], E):-
+    ultimo(T, E).

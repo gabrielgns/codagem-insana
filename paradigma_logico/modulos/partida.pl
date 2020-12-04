@@ -38,7 +38,6 @@ partida([Round| Resto_partida], Pontos, Pontuacao_final):-
     calculaPontos(Tempo_round, N_palavras, N_acertos, Pontos_round),
     Pontuacao_atual is Pontos + Pontos_round,
     tela_palavras_corrigidas(Palavras_acertadas, Round, Pontuacao_atual, Offset_vert, Offsets_hori),
-    nl, write(Tempo_round),
     sleep(1),
     partida(Resto_partida, Pontuacao_atual, Pontuacao_final).
 

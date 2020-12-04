@@ -4,6 +4,8 @@
 :- use_module('modulos/sorteio_palavras', [sortear_palavras_partida/2]).
 :- use_module('modulos/partida').
 :- use_module('modulos/persistencia').
+:- use_module('modulos/util').
+:- use_module('modulos/ranking').
 
 
 menu_principal:-
@@ -57,11 +59,17 @@ selecao_fase:-
 jogo(Linguagem):-
     sortear_palavras_partida(Linguagem, Palavras_partida),
     partida(Palavras_partida, 0, Pontuacao_final),
-    write("Pontuacao_final: "), write(Pontuacao_final).
-    % ver se pode entrar no ranking
-    % chamar funcoes de inserir coisas no ranking ou
-    % imprimir tela de derrota
-    % ir pro menu_principal.
+    write("Pontuacao_final: "), write(Pontuacao_final),
+    ler_ranking(Linguagem, Nomes, Pontos),
+    ultimo(Pontos, Ultimo),
+    (   Pontuacao_final > Ultimo
+    ->  tela(vitoria),
+        ler_nome(Nome),
+        insere_recorde(Pontuacao_final, Nome, Pontos, Nomes, Novos_pontos, Novos_nomes),
+        salvar_ranking(Linguagem, Novos_nomes, Novos_pontos), get_single_char(_)
+    ;   tela(derrota), get_single_char(_)
+    ), menu_principal.
+
 
 main:-
     menu_principal,
