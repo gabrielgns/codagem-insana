@@ -1,6 +1,9 @@
+:- module(partida, [partida/3]).
+
 :- use_module(library(lists), [member/2]).
 :- use_module(telas_dinamicas).
 :- use_module(pontuacao).
+:- use_module(temporizador, [tempo/2]).
 
 
 tentativas(0, _, _, _, _, []).
@@ -26,18 +29,17 @@ partida([Round| Resto_partida], Pontos, Pontuacao_final):-
     length(Round, N_palavras),
     offsets_verticais(N_palavras, Offset_vert),
     offsets_horizontais(Round, Offsets_hori),
-    T0 is 0, % Substituir pela funcao de pegar o tempo
+    tempo(second, T0),
     tentativas(N_palavras, Round, Pontos, Offset_vert, Offsets_hori, Entradas),
-    T1 is 3, % Substituir pela funcao de pegar o tempo
-    Tempo_round is T0 - T1,
+    tempo(second, T1),
+    Tempo_round is T1 - T0,
     corrige(Entradas, Round, Palavras_acertadas),
     length(Palavras_acertadas, N_acertos),
     calculaPontos(Tempo_round, N_palavras, N_acertos, Pontos_round),
     Pontuacao_atual is Pontos + Pontos_round,
-    % Substituir por tela_palavras_corrigidas(Palavras_acertadas, Round, Pontos_round, Offset_vert, Offsets_hori),
     tela_palavras_corrigidas(Palavras_acertadas, Round, Pontuacao_atual, Offset_vert, Offsets_hori),
-    read(C), % Substituir essa linha por um sleep de 1 seg.
-    % Substituir por partida(Resto_partida, Pontos + Pontos_round, Pontuacao_final).
+    nl, write(Tempo_round),
+    sleep(1),
     partida(Resto_partida, Pontuacao_atual, Pontuacao_final).
 
 
