@@ -31,29 +31,29 @@ Palavras bônus/ônus usam coloração dourada.
 Entre as palavras pode vir uma palavra dourada que tem a chance de ⅘ de vir um multiplicador de pontos e ⅕ de vir um ônus que pula ele de nível sem contar o aumento de pontos.
 
 ## Como Jogar em Haskell
-Você deve ter o ghc instalado na sua máquina. Abra o terminal e clone o repositório com
-```git clone https://github.com/gabrielgns/codagem-insana.git```
-Entre na pasta do repo
-```cd codagem-insana```
-E na pasta do paradigma
-```cd paradigma_funcional```
-Compile o main
-```ghc main.hs```
-Rode o código
-```./main```
+Você deve ter o ghc instalado na sua máquina. Abra o terminal e clone o repositório com  
+```git clone https://github.com/gabrielgns/codagem-insana.git```  
+Entre na pasta do repo  
+```cd codagem-insana```  
+E na pasta do paradigma  
+```cd paradigma_funcional```  
+Compile o main  
+```ghc main.hs```  
+Rode o código  
+```./main```  
 Agora é só navegar pelo menu, aproveitar o jogo e olhar suas melhores pontuações.
 
 ## Como jogar em Prolog
-Você deve ter o swi instalado na sua máquina. Abra o terminal e clone o repositório com
-```git clone https://github.com/gabrielgns/codagem-insana.git```
-Entre na pasta do repo
-```cd codagem-insana```
-E na pasta do paradigma
-```cd paradigma_logico```
-Compile o main
-```swipl -s main.pl```
-Rode o código
-```main.```
-dentro do compilador
+Você deve ter o swi instalado na sua máquina. Abra o terminal e clone o repositório com  
+```git clone https://github.com/gabrielgns/codagem-insana.git```  
+Entre na pasta do repo  
+```cd codagem-insana```  
+E na pasta do paradigma  
+```cd paradigma_logico```  
+Compile o main  
+```swipl -s main.pl```  
+Rode o código  
+```main.```  
+dentro do compilador  
 
 Agora é só navegar pelo menu, aproveitar o jogo e olhar suas melhores pontuações.
