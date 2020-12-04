@@ -1,9 +1,16 @@
-:- module(persistencia, [salvar_ranking/3, ler_ranking/3]).
+:- module(persistencia, [salvar_ranking/3, ler_ranking/3, ler_linguagem/2]).
 
-arquivo(python, Arquivo):- Arquivo = './rankings/python.txt'.
-arquivo(java, Arquivo):- Arquivo = './rankings/java.txt'.
-arquivo(haskell, Arquivo):- Arquivo = './rankings/haskell.txt'.
-arquivo(prolog, Arquivo):- Arquivo = './rankings/prolog.txt'.
+:- use_module(util, [remover_por_indice/3]).
+
+arquivo_ranking(python, Arquivo):- Arquivo = './rankings/python.txt'.
+arquivo_ranking(java, Arquivo):- Arquivo = './rankings/java.txt'.
+arquivo_ranking(haskell, Arquivo):- Arquivo = './rankings/haskell.txt'.
+arquivo_ranking(prolog, Arquivo):- Arquivo = './rankings/prolog.txt'.
+
+arquivo_palavras(python, Arquivo):- Arquivo = './palavras_reservadas/python.txt'.
+arquivo_palavras(java, Arquivo):- Arquivo = './palavras_reservadas/java.txt'.
+arquivo_palavras(haskell, Arquivo):- Arquivo = './palavras_reservadas/haskell.txt'.
+arquivo_palavras(prolog, Arquivo):- Arquivo = './palavras_reservadas/prolog.txt'.
 
 
 salvar_lista([], _).
@@ -28,7 +35,7 @@ nomes_upper([N | T], [Nome| X]):-
 
 
 salvar_ranking(Linguagem, Nomes, Pontuacoes):-
-    arquivo(Linguagem, Arquivo),
+    arquivo_ranking(Linguagem, Arquivo),
 	open(Arquivo, write, Stream),
 	salvar_nomes(Nomes, Stream),
     salvar_lista(Pontuacoes, Stream),
@@ -37,23 +44,21 @@ salvar_ranking(Linguagem, Nomes, Pontuacoes):-
 
 
 ler_ranking(Linguagem, Nomes, Pontos):-
-        arquivo(Linguagem, Arquivo),
-        open(Arquivo, read, Stream),
-        read(Stream, N1),
-        read(Stream, N2),
-        read(Stream, N3),
-        nomes_upper([N1, N2, N3], Nomes),
-        read(Stream, P1),
-        read(Stream, P2),
-        read(Stream, P3),
-        Pontos = [P1, P2, P3],
-        close(Stream).
+    arquivo_ranking(Linguagem, Arquivo),
+    open(Arquivo, read, Stream),
+    read(Stream, N1),
+    read(Stream, N2),
+    read(Stream, N3),
+    nomes_upper([N1, N2, N3], Nomes),
+    read(Stream, P1),
+    read(Stream, P2),
+    read(Stream, P3),
+    Pontos = [P1, P2, P3],
+    close(Stream).
 
 
-main:-
-        salvar_ranking(java, ["JOA", "MAR", "LUI"], [30, 20, 10]),
-        salvar_ranking(haskell, ["JOA", "MAR", "LUI"], [30, 20, 10]),
-        salvar_ranking(prolog, ["JOA", "MAR", "LUI"], [30, 20, 10]),
-        ler_ranking(python, N, P),
-        write(N), nl,
-        write(P), nl.
+ler_linguagem(Linguagem, Palavras):-
+    arquivo_palavras(Linguagem, Arquivo),
+    open(Arquivo, read, Stream),
+    read_string(Stream, "", "\n", _, String),
+    split_string(String, "\n", ".", Palavras).

@@ -7,6 +7,7 @@
         soma_lista/2,
         pegar_elementos/3,
         remover_elementos/3,
+        remover_por_indice/3,
         ultimo/2
     ]
 ).
@@ -67,12 +68,22 @@ pegar_elementos(N, [A|Y], [A|D]):-
     N2 is N - 1,
     pegar_elementos(N2, Y, D).
 
-% remove N elementos de uma lista
+
+% remove Q elementos de uma lista
 remover_elementos(0, X, X).
 remover_elementos(Q, [_|Y], D):-
     Q2 is Q - 1,
     remover_elementos(Q2, Y, D).
 
+
+% remove um item de uma lista pelo indice
+remover_por_indice(0, [_|Y], Y).
+remover_por_indice(I, [X|Y], [X|Z]):-
+    I2 is I - 1,
+    remover_por_indice(I2, Y, Z).
+
+
+% Recupera o ultimo elemento de uma lista
 ultimo([], []).
 ultimo([X], X).
 ultimo([_ | T], E):-

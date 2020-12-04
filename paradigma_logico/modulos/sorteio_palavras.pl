@@ -1,5 +1,6 @@
 :- module(sorteio_palavras, [sortear_palavras_partida/2]).
-:- use_module(linguagens, [linguagem/2]).
+
+:- use_module(persistencia, [ler_linguagem/2]).
 :- use_module(library(random), [random_between/3]).
 
 
@@ -14,7 +15,7 @@ sortear_palavras(N, Lista, [Pal| T]):-
 
 
 sortear_palavras_partida(Linguagem, Palavras_partida):-
-    linguagem(Linguagem, Palavras_reservadas),
+    ler_linguagem(Linguagem, Palavras_reservadas),
     sortear_palavras(1, Palavras_reservadas, R1),
     sortear_palavras(1, Palavras_reservadas, R2),
     sortear_palavras(2, Palavras_reservadas, R3),

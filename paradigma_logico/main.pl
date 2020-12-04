@@ -1,6 +1,5 @@
 :- use_module('modulos/telas', [tela/1]).
 :- use_module('modulos/telas_dinamicas').
-:- use_module('modulos/linguagens').
 :- use_module('modulos/sorteio_palavras', [sortear_palavras_partida/2]).
 :- use_module('modulos/partida').
 :- use_module('modulos/persistencia').

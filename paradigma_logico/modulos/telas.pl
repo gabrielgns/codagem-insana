@@ -27,7 +27,7 @@ tela_menu_principal:-
     centraliza_titulo("Codagem Insana", red), nl,
     centraliza("[1] - Iniciar Jogo  "), nl,
     centraliza("[2] - Ranking       "), nl,
-    centraliza("[q] - Sair do Jogo  "), nl,
+    centraliza("[_] - Sair do Jogo  "), nl,
     write_stringr("\n", 10).
 
 
