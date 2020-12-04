@@ -10,8 +10,7 @@ tentativas(0, _, _, _, _, []).
 tentativas(N, Pal, Pontos, Off_v, Off_h, [P|T]):-
     write(Pontos),
     tela_round(Pal, Pontos, Off_v, Off_h),
-    read(E),
-    atom_string(E, P),
+    read_string(user_input, "\n", "\r\t ", _, P),
     N1 is N - 1,
     tentativas(N1, Pal, Pontos, Off_v, Off_h, T).
 

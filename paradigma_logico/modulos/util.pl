@@ -8,7 +8,6 @@
         pegar_elementos/3,
         remover_elementos/3,
         ultimo/2,
-        ler_nome/1
     ]
 ).
 
@@ -53,12 +52,6 @@ centraliza_titulo(Str, Cor):-
 % Função auxiliar de centraliza
 nEspacos(Tamanho_string, Quantidade):-
     Quantidade is 35 - (Tamanho_string / 2).
-
-
-ler_nome(String):-
-    read_string(user_input, 4, Entrada),
-    split_string(Entrada, "\n", "", Textos),
-    nth0(1, Textos, String).
 
 
 % Soma todos os valores de uma lista de números

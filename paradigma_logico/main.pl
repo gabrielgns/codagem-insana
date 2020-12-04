@@ -59,12 +59,12 @@ selecao_fase:-
 jogo(Linguagem):-
     sortear_palavras_partida(Linguagem, Palavras_partida),
     partida(Palavras_partida, 0, Pontuacao_final),
-    write("Pontuacao_final: "), write(Pontuacao_final),
     ler_ranking(Linguagem, Nomes, Pontos),
     ultimo(Pontos, Ultimo),
     (   Pontuacao_final > Ultimo
     ->  tela(vitoria),
-        ler_nome(Nome),
+        read_string(user_input, "\n", "\r\t ", _, N),
+        sub_string(N, _, 3, _, Nome),
         insere_recorde(Pontuacao_final, Nome, Pontos, Nomes, Novos_pontos, Novos_nomes),
         salvar_ranking(Linguagem, Novos_nomes, Novos_pontos), get_single_char(_)
     ;   tela(derrota), get_single_char(_)
