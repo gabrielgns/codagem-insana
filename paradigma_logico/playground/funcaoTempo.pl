@@ -12,7 +12,9 @@ main:-
     get_date_time_value(second,S), 
     
     read(I),
-
+    
+    %sleep de 10 segundos
+    sleep(10),
     get_date_time_value(second,S2), 
     
     ins(S, [], L),
