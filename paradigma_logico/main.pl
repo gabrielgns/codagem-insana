@@ -3,6 +3,7 @@
 :- use_module('modulos/linguagens').
 :- use_module('modulos/sorteio_palavras', [sortear_palavras_partida/2]).
 :- use_module('modulos/partida').
+:- use_module('modulos/persistencia').
 
 
 menu_principal:-
@@ -20,15 +21,22 @@ selecao_ranking:-
     tela(rankings),
     get_single_char(Comando),
     (   Comando == 49
-    ->  tela_ranking("Python", ["JOA", "MAR", "LUI"], [30, 20, 10]), get_single_char(_), selecao_ranking
+    ->  exibir_ranking(python)
     ;   Comando == 50
-    ->  tela_ranking("Java", ["JOA", "MAR", "LUI"], [30, 20, 10]), get_single_char(_), selecao_ranking
+    ->  exibir_ranking(java)
     ;   Comando == 51
-    ->  tela_ranking("Haskell", ["JOA", "MAR", "LUI"], [30, 20, 10]), get_single_char(_), selecao_ranking
+    ->  exibir_ranking(haskell)
     ;   Comando == 52
-    ->  tela_ranking("Prolog", ["JOA", "MAR", "LUI"], [30, 20, 10]), get_single_char(_), selecao_ranking
+    ->  exibir_ranking(prolog)
     ;   menu_principal
     ).
+
+
+exibir_ranking(Linguagem):-
+    ler_ranking(Linguagem, Nomes, Pontos),
+    tela_ranking(Linguagem, Nomes, Pontos),
+    get_single_char(_),
+    selecao_ranking.
 
 
 selecao_fase:-
