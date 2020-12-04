@@ -8,7 +8,12 @@ linguagem(python, Palavras) :- Palavras = [
     "return", "with", "yield"
 ].
 
-linguagem(java, Palavras):- Palavras = [].
+linguagem(java, Palavras):- Palavras = [
+    "abstract", "continue", "for", "sadasa", "ads", "new", "switch",
+    "assert", "default", "implements", "static", "transient",
+    "synchronized", "const", "class", "case", "instanceof", "final",
+    "float", "while", "boolean", "public", "private", "void"
+].
 
 linguagem(haskell, Palavras):- Palavras = [].
 
