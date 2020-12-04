@@ -3,7 +3,7 @@
 :- use_module(library(lists), [member/2]).
 :- use_module(telas_dinamicas).
 :- use_module(pontuacao).
-:- use_module(temporizador, [tempo/2]).
+:- use_module(temporizador, [tempo/1, diferenca_tempo/3]).
 
 
 tentativas(0, _, _, _, _, []).
@@ -25,17 +25,22 @@ corrige([P| TP], PR, Ret):-
 
 partida([], P, P).
 partida([Round| Resto_partida], Pontos, Pontuacao_final):-
+    % Printar as telas e receber inputs
     length(Round, N_palavras),
     offsets_verticais(N_palavras, Offset_vert),
     offsets_horizontais(Round, Offsets_hori),
-    tempo(second, T0),
+    tempo(T0),
     tentativas(N_palavras, Round, Pontos, Offset_vert, Offsets_hori, Entradas),
-    tempo(second, T1),
-    Tempo_round is T1 - T0,
+    tempo(T1),
+
+    % Variáveis necessárias para o cálculo dos pontos
+    diferenca_tempo(T1, T0, Tempo_round),
     corrige(Entradas, Round, Palavras_acertadas),
     length(Palavras_acertadas, N_acertos),
     calculaPontos(Tempo_round, N_palavras, N_acertos, Pontos_round),
     Pontuacao_atual is Pontos + Pontos_round,
+
+    % Tela das palavras corrigidas e próximo round
     tela_palavras_corrigidas(Palavras_acertadas, Round, Pontuacao_atual, Offset_vert, Offsets_hori),
     sleep(1),
     partida(Resto_partida, Pontuacao_atual, Pontuacao_final).

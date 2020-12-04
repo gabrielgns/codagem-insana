@@ -7,7 +7,7 @@
         soma_lista/2,
         pegar_elementos/3,
         remover_elementos/3,
-        ultimo/2,
+        ultimo/2
     ]
 ).
 

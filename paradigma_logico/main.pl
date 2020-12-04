@@ -66,7 +66,7 @@ jogo(Linguagem):-
         read_string(user_input, "\n", "\r\t ", _, N),
         sub_string(N, _, 3, _, Nome),
         insere_recorde(Pontuacao_final, Nome, Pontos, Nomes, Novos_pontos, Novos_nomes),
-        salvar_ranking(Linguagem, Novos_nomes, Novos_pontos), get_single_char(_)
+        salvar_ranking(Linguagem, Novos_nomes, Novos_pontos)
     ;   tela(derrota), get_single_char(_)
     ), menu_principal.
 
