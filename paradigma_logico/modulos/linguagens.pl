@@ -22,4 +22,9 @@ linguagem(haskell, Palavras):- Palavras = [
     "qualified", "rec", "type", "where"
 ].
 
-linguagem(prolog, Palavras):- Palavras = [].
+linguagem(prolog, Palavras):- Palavras = [
+    "skip", "abolish", "assertion", "catch", "edit", "dynamic",
+    "erase", "getenv", "is", "name", "not", "read", "consult",
+    "call", "break", "atomic", "elif", "fail", "false", "freeze",
+    "get", "functor", "tell", "visible"
+].
