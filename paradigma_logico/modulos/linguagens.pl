@@ -15,6 +15,11 @@ linguagem(java, Palavras):- Palavras = [
     "float", "while", "boolean", "public", "private", "void"
 ].
 
-linguagem(haskell, Palavras):- Palavras = [].
+linguagem(haskell, Palavras):- Palavras = [
+    "as", "case", "of", "data", "default", "deriving", "do",
+    "forall", "foreign", "hiding", "import", "infix", "infixl",
+    "infixr", "instance", "let", "in", "mdo", "module", "proc",
+    "qualified", "rec", "type", "where"
+].
 
 linguagem(prolog, Palavras):- Palavras = [].
